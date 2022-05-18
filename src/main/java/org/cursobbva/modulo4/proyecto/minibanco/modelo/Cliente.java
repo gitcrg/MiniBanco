@@ -3,6 +3,7 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 /**
  * 
  * @author Cristian Gutierrez
@@ -19,14 +22,18 @@ import javax.persistence.OneToMany;
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;;
+	private Long id;
+	@NotEmpty(message = "{cliente.nombre}")
 	private String nombre;
+	@NotEmpty(message = "{cliente.apellido}")
 	private String apellido;
 	private String telefono;
 	private String email;
 	@Embedded
+	@NotNull(message = "{cliente.direccion}")
 	private Direccion direccion;
 	@OneToMany (mappedBy = "titular")
+	@Column(updatable=false)
 	private List<Cuenta> cuentasTitular = new ArrayList<Cuenta>();
 	@ManyToMany (mappedBy = "cotitulares")
 	private List<Cuenta> cuentasCoTitular = new ArrayList<Cuenta>();

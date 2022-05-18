@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 public class Deposito extends DepositoExtraccion{
 
-	public Deposito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripción, String cajaCajero) {
-		super(fechayHoraDeRealizacion, monto, descripción, cajaCajero);
+	public Deposito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, String cajaCajero) {
+		super(fechayHoraDeRealizacion, monto, descripcion, cajaCajero);
 		// TODO Auto-generated constructor stub
 	}
 	public Deposito() {}

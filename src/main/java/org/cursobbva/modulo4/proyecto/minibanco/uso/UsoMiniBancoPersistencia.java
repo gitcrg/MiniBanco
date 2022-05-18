@@ -37,8 +37,8 @@ public class UsoMiniBancoPersistencia {
 		Cliente cte2 = new Cliente("nombrecte2", "apellido", "telefono", "email", dir2);
 		Cliente cte3 = new Cliente("nombrecte3", "apellido", "telefono", "email", dir3);
 	
-		CuentaLocal ctaLoc1 = new CuentaLocal(null, LocalDate.now(), 0F, 0F, 1000F, null, cte1);
-		CuentaExtranjera ctaExt2 = new CuentaExtranjera(null, LocalDate.now(), 0F, 0F, 1000F, null, cte1, TipoMoneda.DOLAR);
+		CuentaLocal ctaLoc1 = new CuentaLocal(LocalDate.now(), 0F, 0F, 1000F, null, cte1);
+		CuentaExtranjera ctaExt2 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, null, cte1, TipoMoneda.DOLAR);
 		ctaExt2.agregarCotitular(cte2);
 		ctaExt2.agregarCotitular(cte3);
 		
@@ -49,6 +49,10 @@ public class UsoMiniBancoPersistencia {
 		ctaLoc1.agregarMovimiento(tranCred1);
 		ctaLoc1.agregarMovimiento(extra1);
 		ctaExt2.agregarMovimiento(cmpr1);
+		
+//		tranCred1.setCuenta(ctaLoc1);
+//		extra1.setCuenta(ctaLoc1);
+//		cmpr1.setCuenta(ctaExt2);
 		
 	
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("minibancoPU");

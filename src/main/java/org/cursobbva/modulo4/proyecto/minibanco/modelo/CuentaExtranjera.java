@@ -16,9 +16,9 @@ public class CuentaExtranjera extends Cuenta{
 	@Enumerated(EnumType.STRING)
 	private TipoMoneda moneda;
 
-	public CuentaExtranjera(Long numero, LocalDate fechaDeDreación, float saldoInicial, float saldoActual,
+	public CuentaExtranjera(LocalDate fechaDeDreación, float saldoInicial, float saldoActual,
 			float descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular, TipoMoneda moneda) {
-		super(numero, fechaDeDreación, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
+		super(fechaDeDreación, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
 		this.moneda = moneda;
 	}
 	public CuentaExtranjera() {}

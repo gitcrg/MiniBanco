@@ -2,6 +2,13 @@ package org.cursobbva.modulo4.proyecto.minibanco.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,31 +19,50 @@ import org.junit.Test;
  */
 public class DireccionTest {
 	
-	Direccion d1;
-
+	Direccion dir;
+	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	Validator validator = factory.getValidator();
+	
 	@Before
 	public void crearDireccion() {
-		//d1 = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
+		//dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudadir", "codigoPostal1", "provincia1");
 	}
 
 	@Test
-	public void testContructorDireccion() {
-		d1 = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
+	public void testContructorDireccionOk() {
+		dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudadir", "codigoPostal1", "provincia1");
 		String calle = "calle1";
 		String numero = "numero1";
 		String departamento = "departamento1";
 		String piso= "piso1";
-		String ciudad = "ciudad1";
+		String ciudad = "ciudadir";
 		String codigoPostal = "codigoPostal1";
 		String provincia= "provincia1";
-		assertEquals(calle, d1.getCalle());
-		assertEquals(numero, d1.getNumero());
-		assertEquals(departamento, d1.getDepartamento());
-		assertEquals(piso, d1.getPiso());
-		assertEquals(ciudad, d1.getCiudad());
-		assertEquals(codigoPostal, d1.getCodigoPostal());
-		assertEquals(provincia, d1.getProvincia());
+		assertEquals(calle, dir.getCalle());
+		assertEquals(numero, dir.getNumero());
+		assertEquals(departamento, dir.getDepartamento());
+		assertEquals(piso, dir.getPiso());
+		assertEquals(ciudad, dir.getCiudad());
+		assertEquals(codigoPostal, dir.getCodigoPostal());
+		assertEquals(provincia, dir.getProvincia());
 	}
 
+	@Test
+	public void testValidacionCamposObligatorios() {
+		String calle = "";
+		String numero = "";
+		String departamento = "";
+		String piso= "";
+		String ciudad = "";
+		String codigoPostal = "";
+		String provincia= "";
+		
+		dir = new Direccion(calle, numero, departamento, piso, ciudad, codigoPostal, provincia);
+
+		Set<ConstraintViolation<Direccion>> violations = validator.validate(dir);
+		assertTrue(!violations.isEmpty());
+		assertEquals(5,violations.size());
+		
+	}
 
 }

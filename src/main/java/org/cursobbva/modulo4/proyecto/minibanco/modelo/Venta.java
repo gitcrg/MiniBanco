@@ -12,9 +12,9 @@ import javax.persistence.Entity;
 @Entity
 public class Venta extends CompraVenta{
 
-	public Venta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripción, float cotizacion,
+	public Venta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, float cotizacion,
 			float comision) {
-		super(fechayHoraDeRealizacion, monto, descripción, cotizacion, comision);
+		super(fechayHoraDeRealizacion, monto, descripcion, cotizacion, comision);
 		// TODO Auto-generated constructor stub
 	}
 	public Venta() {}

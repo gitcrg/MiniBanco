@@ -3,7 +3,10 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.Positive;
+
 /**
  * 
  * @author Cristian Gutierrez
@@ -11,14 +14,15 @@ import javax.persistence.Entity;
  */
 @Entity
 public abstract class CompraVenta extends Movimiento{
-	
+	@Positive(message = "{movimiento.cotizacion}")
+	@Column(updatable=false)
 	private float cotizacion;
 	
 	private float comision;
 
-	public CompraVenta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripción, float cotizacion,
+	public CompraVenta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, float cotizacion,
 			float comision) {
-		super(fechayHoraDeRealizacion, monto, descripción);
+		super(fechayHoraDeRealizacion, monto, descripcion);
 		this.cotizacion = cotizacion;
 		this.comision = comision;
 	}

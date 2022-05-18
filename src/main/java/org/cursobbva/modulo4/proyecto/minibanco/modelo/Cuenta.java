@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
 /**
  * 
  * @author Cristian Gutierrez
@@ -24,13 +30,21 @@ import javax.persistence.Transient;
 public abstract class Cuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long numero;
+	private long numero;
+	@NotNull(message = "{cuenta.fechaCreacion}")
+	@PastOrPresent(message = "{cuenta.fechaCreacion.pasado}")
+	@Column(updatable=false)
 	private LocalDate fechaDeCreacion;
+	@PositiveOrZero(message = "{cuenta.saldoInicial}")
+	@Column(updatable=false)
 	private float saldoInicial;
+	@PositiveOrZero(message = "{cuenta.saldoActual}")
 	private float saldoActual;
+	@PositiveOrZero(message = "{cuenta.descubiertoAcordado}")
 	private float descubiertoAcordado;
 	private LocalDate fechaDeCierre;
 	@ManyToOne
+	@NotNull(message = "{cuenta.titular}")
 	private Cliente titular;
 	@ManyToMany
 	private Set<Cliente> cotitulares = new HashSet<Cliente>();
@@ -38,10 +52,9 @@ public abstract class Cuenta {
 	@JoinColumn (name ="cuenta_id")
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-	public Cuenta(Long numero, LocalDate fechaDeCreacion, float saldoInicial, float saldoActual,
+	public Cuenta(LocalDate fechaDeCreacion, float saldoInicial, float saldoActual,
 			float descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
 		super();
-		this.numero = numero;
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.saldoInicial = saldoInicial;
 		this.saldoActual = saldoActual;
@@ -52,11 +65,11 @@ public abstract class Cuenta {
 	}
 	public Cuenta() {}
 
-	public Long getNumero() {
+	public long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Long numero) {
+	public void setNumero(long numero) {
 		this.numero = numero;
 	}
 

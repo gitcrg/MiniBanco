@@ -3,12 +3,29 @@ package org.cursobbva.modulo4.proyecto.minibanco.test;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Compra;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Deposito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Extraccion;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+
 /**
  * 
  * @author Cristian Gutierrez
@@ -18,7 +35,10 @@ public class CuentaTest {
 
 	Direccion dir;
 	Cliente cte;
-	CuentaLocal cta;
+	Cuenta cta;
+	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	Validator validator = factory.getValidator();
+
 
 	@Before
 	public void crearDireccion() {
@@ -27,15 +47,32 @@ public class CuentaTest {
 	}
 
 	@Test
-	public void testContructorCuenta() {
-		cta = new CuentaLocal(1234L, LocalDate.now(), 0F, 0F, 1000F, null, cte );
-		long numero = 1234L;
+	public void testContructorCuentaLocalOk() {
+		cta = new CuentaLocal(LocalDate.now(), 0F, 0F, 0F, null, cte );
+
 		LocalDate fechacreacion = LocalDate.now();
-		Float saldoInicial = 0F;
-		Float saldoActual = 0F;
-		Float descubierto = 1000F;
+		float saldoInicial = 0F;
+		float saldoActual = 0F;
+		float descubierto = 0F;
 		LocalDate fechaCierre = null;
-		assertEquals(numero, cta.getNumero(),0);
+
+		assertEquals(fechacreacion, cta.getFechaDeCreacion());
+		assertEquals(saldoInicial, cta.getSaldoInicial(),0);
+		assertEquals(saldoActual, cta.getSaldoActual(),0);
+		assertEquals(descubierto, cta.getDescubiertoAcordado(),0);
+		assertEquals(fechaCierre, cta.getFechaDeCierre());
+		assertTrue(cta.getTitular().equals(cte));
+	}
+	
+	@Test
+	public void testContructorCuentaExtranjeraOk() {
+		cta = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 0F, null, cte, TipoMoneda.DOLAR );
+		LocalDate fechacreacion = LocalDate.now();
+		float saldoInicial = 0F;
+		float saldoActual = 0F;
+		float descubierto = 0F;
+		LocalDate fechaCierre = null;
+
 		assertEquals(fechacreacion, cta.getFechaDeCreacion());
 		assertEquals(saldoInicial, cta.getSaldoInicial(),0);
 		assertEquals(saldoActual, cta.getSaldoActual(),0);
@@ -45,4 +82,61 @@ public class CuentaTest {
 	}
 	
 
+	@Test
+	public void testAgregarCotitularCuenta() {
+		
+		Cliente cli1 = mock(Cliente.class);
+		Cliente cli2 = mock(Cliente.class);
+		Cliente cli3 = mock(Cliente.class);
+		
+		cta = new CuentaLocal(LocalDate.now(), 0F, 0F, 1000F, null, cte );
+		
+		cta.agregarCotitular(cli1);
+		cta.agregarCotitular(cli2);
+		cta.agregarCotitular(cli3);
+		
+		assertEquals(3, cta.getCotitulares().size());
+	}
+	
+	
+	@Test
+	public void testAgregarMovimientoCuenta() {
+		
+		TransferenciaCredito mov1 = mock(TransferenciaCredito.class);
+		TransferenciaDebito mov2 = mock(TransferenciaDebito.class);
+		Deposito mov3 = mock(Deposito.class);
+		Extraccion mov4 = mock(Extraccion.class);
+		Compra mov5 = mock(Compra.class);
+		Venta mov6 = mock(Venta.class);
+		
+		cta = new CuentaLocal(LocalDate.now(), 0F, 0F, 1000F, null, cte );
+		
+		cta.agregarMovimiento(mov1);
+		cta.agregarMovimiento(mov2);
+		cta.agregarMovimiento(mov3);
+		cta.agregarMovimiento(mov4);
+		cta.agregarMovimiento(mov5);
+		cta.agregarMovimiento(mov6);
+		
+		assertEquals(6, cta.getMovimientos().size());
+	}
+	
+	@Test
+	public void testValidacionCamposObligatorios() {
+		LocalDate fechaCreacion = null;
+		float saldoInicial = -1;
+		float saldoActual = -1;
+		float descubierto = -1;
+		LocalDate fechaCierre = null;
+		Cliente titular = null;
+		
+		cta = new CuentaLocal(fechaCreacion, saldoInicial, saldoActual, descubierto, fechaCierre, titular );
+
+		Set<ConstraintViolation<Cuenta>> violations = validator.validate(cta);
+		assertTrue(!violations.isEmpty());
+		assertEquals(5,violations.size());
+		
+	}
+
+	
 }

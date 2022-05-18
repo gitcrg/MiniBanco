@@ -2,11 +2,17 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 /**
  * 
  * @author Cristian Gutierrez
@@ -17,20 +23,35 @@ public abstract class Movimiento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull(message = "{movimiento.fechaHora}")
+	@PastOrPresent(message = "{movimiento.fechaHora.pasado}")
+	@Column(updatable=false)
 	private LocalDateTime fechayHoraDeRealizacion;
+	@Positive(message="{movimiento.monto}")
+	@Column(updatable=false)
 	private float monto;
-	private String descripción;
-	@ManyToOne
-	private Cuenta cuenta;
+	@NotEmpty(message = "{movimiento.descripcion}")
+	@Column(updatable=false)
+	private String descripcion;
+//	@ManyToOne
+//	@NotNull(message = "{movimiento.cuenta}")
+//	@Transient
+//	private Cuenta cuenta;
 	
-	public Movimiento(LocalDateTime fechayHoraDeRealizacion, float monto, String descripción) {
+	public Movimiento(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion) {
 		super();
 		this.fechayHoraDeRealizacion = fechayHoraDeRealizacion;
 		this.monto = monto;
-		this.descripción = descripción;
+		this.descripcion = descripcion;
 	}
 	public Movimiento() {}
 
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public LocalDateTime getFechayHoraDeRealizacion() {
 		return fechayHoraDeRealizacion;
 	}
@@ -47,13 +68,20 @@ public abstract class Movimiento {
 		this.monto = monto;
 	}
 
-	public String getDescripción() {
-		return descripción;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setDescripción(String descripción) {
-		this.descripción = descripción;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
+
+//	public Cuenta getCuenta() {
+//		return cuenta;
+//	}
+//	public void setCuenta(Cuenta cuenta) {
+//		this.cuenta = cuenta;
+//	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
 /**
  * 
  * @author Cristian Gutierrez
@@ -8,13 +9,17 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Direccion {
-	
+	@NotEmpty(message = "{direccion.calle}")
 	private String calle;
+	@NotEmpty(message = "{direccion.numero}")
 	private String numero;
 	private String departamento;
 	private String piso;
+	@NotEmpty(message = "{direccion.ciudad}")
 	private String ciudad;
+	@NotEmpty(message = "{direccion.codigoPostal}")
 	private String codigoPostal;
+	@NotEmpty(message = "{direccion.provincia}")
 	private String provincia;
 	
 	public Direccion(String calle, String numero, String departamento, String piso, String ciudad, String codigoPostal,

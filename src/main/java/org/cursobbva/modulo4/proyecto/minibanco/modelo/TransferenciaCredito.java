@@ -12,9 +12,9 @@ import javax.persistence.Entity;
 @Entity
 public class TransferenciaCredito extends Transferencia{
 
-	public TransferenciaCredito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripción,
+	public TransferenciaCredito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion,
 			Cuenta cuentaOrigenDestino) {
-		super(fechayHoraDeRealizacion, monto, descripción, cuentaOrigenDestino);
+		super(fechayHoraDeRealizacion, monto, descripcion, cuentaOrigenDestino);
 		// TODO Auto-generated constructor stub
 	}
 	public TransferenciaCredito() {}

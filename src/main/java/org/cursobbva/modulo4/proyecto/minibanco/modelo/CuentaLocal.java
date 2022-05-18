@@ -11,9 +11,9 @@ import javax.persistence.Entity;
 @Entity
 public class CuentaLocal extends Cuenta{
 
-	public CuentaLocal(Long numero, LocalDate fechaDeDreación, float saldoInicial, float saldoActual,
+	public CuentaLocal(LocalDate fechaDeDreacion, float saldoInicial, float saldoActual,
 			float descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
-		super(numero, fechaDeDreación, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
+		super(fechaDeDreacion, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
 		// TODO Auto-generated constructor stub
 	}
 	public CuentaLocal() {}
