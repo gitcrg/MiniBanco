@@ -6,33 +6,51 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+@Entity
 public abstract class Cuenta {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long numero;
 	private LocalDate fechaDeCreacion;
 	private float saldoInicial;
 	private float saldoActual;
 	private float descubiertoAcordado;
 	private LocalDate fechaDeCierre;
-
-	private ClienteTitular titular;
-	
-	private Set<ClienteCoTitular> cotitulares = new HashSet<ClienteCoTitular>();
-	
+	@ManyToOne
+	private Cliente titular;
+	@ManyToMany
+	private Set<Cliente> cotitulares = new HashSet<Cliente>();
+	@OneToMany
+	@JoinColumn (name ="cuenta_id")
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
 	public Cuenta(Long numero, LocalDate fechaDeCreacion, float saldoInicial, float saldoActual,
-			float descubiertoAcordado, LocalDate fechaDeCierre, ClienteTitular titular) {
+			float descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
 		super();
 		this.numero = numero;
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.saldoInicial = saldoInicial;
-//		this.saldoActual = saldoActual;
+		this.saldoActual = saldoActual;
 		this.saldoActual = saldoInicial;
 		this.descubiertoAcordado = descubiertoAcordado;
 		this.fechaDeCierre = fechaDeCierre;
 		this.titular = titular;
 	}
+	public Cuenta() {}
 
 	public Long getNumero() {
 		return numero;
@@ -82,19 +100,19 @@ public abstract class Cuenta {
 		this.fechaDeCierre = fechaDeCierre;
 	}
 
-	public ClienteTitular getTitular() {
+	public Cliente getTitular() {
 		return titular;
 	}
 
-	public void setTitular(ClienteTitular titular) {
+	public void setTitular(Cliente titular) {
 		this.titular = titular;
 	}
 
-	public Set<ClienteCoTitular> getCotitulares() {
+	public Set<Cliente> getCotitulares() {
 		return cotitulares;
 	}
 
-	public void setCotitulares(Set<ClienteCoTitular> cotitulares) {
+	public void setCotitulares(Set<Cliente> cotitulares) {
 		this.cotitulares = cotitulares;
 	}
 
@@ -106,7 +124,7 @@ public abstract class Cuenta {
 		this.movimientos = movimientos;
 	}
 	
-	public void agregarCotitular(ClienteCoTitular cotitular) {
+	public void agregarCotitular(Cliente cotitular) {
 		cotitulares.add(cotitular);
 	}
 

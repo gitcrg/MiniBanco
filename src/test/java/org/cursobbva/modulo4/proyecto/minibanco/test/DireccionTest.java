@@ -5,7 +5,11 @@ import static org.junit.Assert.*;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 public class DireccionTest {
 	
 	Direccion d1;

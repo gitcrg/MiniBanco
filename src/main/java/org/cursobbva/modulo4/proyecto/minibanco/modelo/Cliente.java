@@ -3,16 +3,33 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Cliente {
-	
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+@Entity
+public class Cliente {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;;
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String email;
-
+	@Embedded
 	private Direccion direccion;
-	
-	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	@OneToMany (mappedBy = "titular")
+	private List<Cuenta> cuentasTitular = new ArrayList<Cuenta>();
+	@ManyToMany (mappedBy = "cotitulares")
+	private List<Cuenta> cuentasCoTitular = new ArrayList<Cuenta>();
 
 	public Cliente(String nombre, String apellido, String telefono, String email, Direccion direccion) {
 		super();
@@ -22,7 +39,17 @@ public abstract class Cliente {
 		this.email = email;
 		this.direccion = direccion;
 	}
+	public Cliente() {}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -63,16 +90,28 @@ public abstract class Cliente {
 		this.email = email;
 	}
 
-	public List<Cuenta> getCuentas() {
-		return cuentas;
+	public List<Cuenta> getCuentasTitular() {
+		return cuentasTitular;
 	}
 
-	public void setCuentas(List<Cuenta> cuentas) {
-		this.cuentas = cuentas;
+	public void setCuentasTitular(List<Cuenta> cuentasTitular) {
+		this.cuentasTitular = cuentasTitular;
+	}
+
+	public List<Cuenta> getCuentasCoTitular() {
+		return cuentasCoTitular;
+	}
+
+	public void setCuentasCoTitular(List<Cuenta> cuentasCoTitular) {
+		this.cuentasCoTitular = cuentasCoTitular;
+	}
+
+	public void agregarCuentaTitular(Cuenta cuenta) {
+		cuentasTitular.add(cuenta);
 	}
 	
-	public void agregarCuenta(Cuenta cuenta) {
-		cuentas.add(cuenta);
+	public void agregarCuentaCoTitular(Cuenta cuenta) {
+		cuentasCoTitular.add(cuenta);
 	}
-
+	
 }

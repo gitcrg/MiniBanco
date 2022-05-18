@@ -3,6 +3,13 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+@Entity
 public abstract class CompraVenta extends Movimiento{
 	
 	private float cotizacion;
@@ -15,6 +22,7 @@ public abstract class CompraVenta extends Movimiento{
 		this.cotizacion = cotizacion;
 		this.comision = comision;
 	}
+	public CompraVenta() {}
 
 	public float getCotizacion() {
 		return cotizacion;

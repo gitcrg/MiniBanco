@@ -1,5 +1,12 @@
 package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
+import javax.persistence.Embeddable;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+@Embeddable
 public class Direccion {
 	
 	private String calle;
@@ -21,6 +28,7 @@ public class Direccion {
 		this.codigoPostal = codigoPostal;
 		this.provincia = provincia;
 	}
+	public Direccion() {}
 
 	public String getCalle() {
 		return calle;

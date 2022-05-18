@@ -3,6 +3,13 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+@Entity
 public abstract class DepositoExtraccion extends Movimiento{
 	
 	private String cajaCajero;
@@ -12,6 +19,7 @@ public abstract class DepositoExtraccion extends Movimiento{
 		super(fechayHoraDeRealizacion, monto, descripción);
 		this.cajaCajero = cajaCajero;
 	}
+	public DepositoExtraccion() {}
 
 	public String getCajaCajero() {
 		return cajaCajero;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.ClienteTitular;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Compra;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Deposito;
@@ -16,11 +16,15 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 public class MovimientoTest {
 
-	Direccion d;
-	ClienteTitular c;
+	Direccion dir;
+	Cliente cte;
 	CuentaLocal cta;
 	Deposito dep;
 	Extraccion ext;
@@ -32,15 +36,14 @@ public class MovimientoTest {
 	
 	@Before
 	public void crear() {
-		d = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
-		c = new ClienteTitular("nombre", "apellido", "telefono", "email", d);
-		cta = new CuentaLocal(1234L, LocalDate.now(), 0F, 0F, 1000F, null, c );
+		dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
+		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
+		cta = new CuentaLocal(null, LocalDate.now(), 0F, 0F, 1000F, null, cte );
 	}
 
 	@Test
 	public void testContructorDeposito() {
 		dep = new Deposito(LocalDateTime.now(), 2000F, "deposito 1", "cajaCajero 1");
-//		LocalDate fechacreacion = LocalDate.now();
 		Float monto = 2000F;
 		String descripcion = "deposito 1";
 		String cajero = "cajaCajero 1";
@@ -51,11 +54,10 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorExtraccion() {
-		ext = new Extraccion(LocalDateTime.now(), 500F, "extraccion 1", "caja 2");
-//		LocalDate fechacreacion = LocalDate.now();
+		ext = new Extraccion(LocalDateTime.now(), 500F, "extraccion1", "caja2");
 		Float monto = 500F;
-		String descripcion = "extraccion 1";
-		String cajero = "caja 2";
+		String descripcion = "extraccion1";
+		String cajero = "caja2";
 		assertEquals(monto, ext.getMonto(),0);
 		assertEquals(descripcion, ext.getDescripción());
 		assertEquals(cajero, ext.getCajaCajero());
@@ -63,10 +65,9 @@ public class MovimientoTest {
 
 	@Test
 	public void testContructorCompra() {
-		cmp = new Compra(LocalDateTime.now(), 500F, "compra dolares", 205F, 5F);
-//		LocalDate fechacreacion = LocalDate.now();
+		cmp = new Compra(LocalDateTime.now(), 500F, "compra-dolares", 205F, 5F);
 		Float monto = 500F;
-		String descripcion = "compra dolares";
+		String descripcion = "compra-dolares";
 		Float cotizacion = 205F;
 		Float comision = 5F;
 		assertEquals(monto, cmp.getMonto(),0);
@@ -77,10 +78,9 @@ public class MovimientoTest {
 
 	@Test
 	public void testContructorVenta() {
-		vnt = new Venta(LocalDateTime.now(), 100F, "venta dolares", 195F, 5F);
-//		LocalDate fechacreacion = LocalDate.now();
+		vnt = new Venta(LocalDateTime.now(), 100F, "venta-dolares", 195F, 5F);
 		Float monto = 100F;
-		String descripcion = "venta dolares";
+		String descripcion = "venta-dolares";
 		Float cotizacion = 195F;
 		Float comision = 5F;
 		assertEquals(monto, vnt.getMonto(),0);
@@ -91,10 +91,9 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorCredito() {
-		cred = new TransferenciaCredito(LocalDateTime.now(), 35000F, "credito tran", cta);
-//		LocalDate fechacreacion = LocalDate.now();
+		cred = new TransferenciaCredito(LocalDateTime.now(), 35000F, "credito-tran", cta);
 		Float monto = 35000F;
-		String descripcion = "credito tran";
+		String descripcion = "credito-tran";
 		assertEquals(monto, cred.getMonto(),0);
 		assertEquals(descripcion, cred.getDescripción());
 		assertTrue(cred.getCuentaOrigenDestino().equals(cta));
@@ -102,16 +101,13 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorDebito() {
-		debi = new TransferenciaDebito(LocalDateTime.now(), 5000F, "debito tran", cta);
-//		LocalDate fechacreacion = LocalDate.now();
+		debi = new TransferenciaDebito(LocalDateTime.now(), 5000F, "debito-tran", cta);
 		Float monto = 5000F;
-		String descripcion = "debito tran";
+		String descripcion = "debito-tran";
 		assertEquals(monto, debi.getMonto(),0);
 		assertEquals(descripcion, debi.getDescripción());
 		assertTrue(debi.getCuentaOrigenDestino().equals(cta));
 	}
-	
-	
 	
 }
 
