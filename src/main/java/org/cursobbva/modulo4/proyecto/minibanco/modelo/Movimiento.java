@@ -7,17 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
 public abstract class Movimiento {
 	@Id
@@ -33,11 +35,13 @@ public abstract class Movimiento {
 	@NotEmpty(message = "{movimiento.descripcion}")
 	@Column(updatable=false)
 	private String descripcion;
-//	@ManyToOne
+	@ManyToOne
+	@JoinColumn(name="Cuenta_Id")
 //	@NotNull(message = "{movimiento.cuenta}")
-//	@Transient
-//	private Cuenta cuenta;
+	private Cuenta cuenta;
 	
+
+	//CONSTRUCTORES
 	public Movimiento(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion) {
 		super();
 		this.fechayHoraDeRealizacion = fechayHoraDeRealizacion;
@@ -45,7 +49,9 @@ public abstract class Movimiento {
 		this.descripcion = descripcion;
 	}
 	public Movimiento() {}
-
+	
+	
+	//GETTERS Y SETTERS
 	public Long getId() {
 		return id;
 	}
@@ -55,34 +61,28 @@ public abstract class Movimiento {
 	public LocalDateTime getFechayHoraDeRealizacion() {
 		return fechayHoraDeRealizacion;
 	}
-
 	public void setFechayHoraDeRealizacion(LocalDateTime fechayHoraDeRealizacion) {
 		this.fechayHoraDeRealizacion = fechayHoraDeRealizacion;
 	}
-
 	public float getMonto() {
 		return monto;
 	}
-
 	public void setMonto(float monto) {
 		this.monto = monto;
 	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-//	public Cuenta getCuenta() {
-//		return cuenta;
-//	}
-//	public void setCuenta(Cuenta cuenta) {
-//		this.cuenta = cuenta;
-//	}
-	
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
 	
 	
 }

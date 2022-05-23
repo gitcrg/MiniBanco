@@ -14,23 +14,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
+@NamedQueries({
+@NamedQuery(name="Cuenta.cuentaByMoneda", query="select cta from Cuenta cta where cta.moneda=:moneda")})
 public abstract class Cuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long numero;
+	private Long numero;
 	@NotNull(message = "{cuenta.fechaCreacion}")
 	@PastOrPresent(message = "{cuenta.fechaCreacion.pasado}")
 	@Column(updatable=false)
@@ -44,105 +53,97 @@ public abstract class Cuenta {
 	private float descubiertoAcordado;
 	private LocalDate fechaDeCierre;
 	@ManyToOne
+	@JoinColumn(name="titular_Id", updatable=false)
 	@NotNull(message = "{cuenta.titular}")
 	private Cliente titular;
 	@ManyToMany
 	private Set<Cliente> cotitulares = new HashSet<Cliente>();
-	@OneToMany
-	@JoinColumn (name ="cuenta_id")
+	@OneToMany(mappedBy = "cuenta")
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-	public Cuenta(LocalDate fechaDeCreacion, float saldoInicial, float saldoActual,
-			float descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
+
+	//CONSTRUCTORES
+	public Cuenta(LocalDate fechaDeCreacion, float saldoInicial, float saldoActual, float descubiertoAcordado,
+			LocalDate fechaDeCierre, Cliente titular) {
 		super();
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.saldoInicial = saldoInicial;
 		this.saldoActual = saldoActual;
-		this.saldoActual = saldoInicial;
 		this.descubiertoAcordado = descubiertoAcordado;
 		this.fechaDeCierre = fechaDeCierre;
 		this.titular = titular;
 	}
 	public Cuenta() {}
-
-	public long getNumero() {
+	
+	//GETTERS Y SETTERS	
+	public Long getNumero() {
 		return numero;
 	}
-
-	public void setNumero(long numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
-
 	public LocalDate getFechaDeCreacion() {
 		return fechaDeCreacion;
 	}
-
-	public void setFechaDeCreacion(LocalDate fechaDeCreación) {
-		this.fechaDeCreacion = fechaDeCreación;
+	public void setFechaDeCreacion(LocalDate fechaDeCreacion) {
+		this.fechaDeCreacion = fechaDeCreacion;
 	}
-
 	public float getSaldoInicial() {
 		return saldoInicial;
 	}
-
 	public void setSaldoInicial(float saldoInicial) {
 		this.saldoInicial = saldoInicial;
 	}
-
 	public float getSaldoActual() {
 		return saldoActual;
 	}
-
 	public void setSaldoActual(float saldoActual) {
 		this.saldoActual = saldoActual;
 	}
-
 	public float getDescubiertoAcordado() {
 		return descubiertoAcordado;
 	}
-
 	public void setDescubiertoAcordado(float descubiertoAcordado) {
 		this.descubiertoAcordado = descubiertoAcordado;
 	}
-
 	public LocalDate getFechaDeCierre() {
 		return fechaDeCierre;
 	}
-
 	public void setFechaDeCierre(LocalDate fechaDeCierre) {
 		this.fechaDeCierre = fechaDeCierre;
 	}
-
 	public Cliente getTitular() {
 		return titular;
 	}
-
 	public void setTitular(Cliente titular) {
 		this.titular = titular;
 	}
-
 	public Set<Cliente> getCotitulares() {
 		return cotitulares;
 	}
-
 	public void setCotitulares(Set<Cliente> cotitulares) {
 		this.cotitulares = cotitulares;
 	}
-
 	public List<Movimiento> getMovimientos() {
 		return movimientos;
 	}
-
 	public void setMovimientos(List<Movimiento> movimientos) {
 		this.movimientos = movimientos;
 	}
+
+	
 	
 	public void agregarCotitular(Cliente cotitular) {
 		cotitulares.add(cotitular);
 	}
 
+
+	
 	public void agregarMovimiento(Movimiento movimiento) {
 		movimientos.add(movimiento);
 	}
-	
+
+
+
+
 }

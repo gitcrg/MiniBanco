@@ -12,10 +12,11 @@ import javax.validation.constraints.Positive;
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
 public abstract class CompraVenta extends Movimiento{
 	@Positive(message = "{movimiento.cotizacion}")
-	@Column(updatable=false)
+//	@Column(updatable=false)
 	private float cotizacion;
 	
 	private float comision;

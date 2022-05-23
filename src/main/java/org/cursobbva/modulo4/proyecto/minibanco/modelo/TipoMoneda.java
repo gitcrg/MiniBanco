@@ -1,12 +1,12 @@
 package org.cursobbva.modulo4.proyecto.minibanco.modelo;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
-public enum TipoMoneda {
 
-	    DOLAR,
-	    EURO,
-	
+public enum TipoMoneda {
+    DOLAR,
+    EURO,
 }

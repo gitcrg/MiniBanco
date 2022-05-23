@@ -9,6 +9,7 @@ import javax.persistence.Entity;
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
 public class Venta extends CompraVenta{
 

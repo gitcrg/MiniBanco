@@ -29,11 +29,13 @@ import org.junit.Test;
  * @author Cristian Gutierrez
  *
  */
+
 public class MovimientoTest {
 
 	Direccion dir;
 	Cliente cte;
 	Cuenta cta;
+	Movimiento mov;
 	Deposito dep;
 	Extraccion ext;
 	Compra cmp;
@@ -107,7 +109,7 @@ public class MovimientoTest {
 		String descripcion = "credito-tran";
 		assertEquals(monto, cred.getMonto(),0);
 		assertEquals(descripcion, cred.getDescripcion());
-		assertTrue(cred.getCuentaOrigenDestino().equals(cta));
+		assertTrue(cred.getCuentaOrigen().equals(cta));
 	}
 	
 	@Test
@@ -117,7 +119,7 @@ public class MovimientoTest {
 		String descripcion = "debito-tran";
 		assertEquals(monto, debi.getMonto(),0);
 		assertEquals(descripcion, debi.getDescripcion());
-		assertTrue(debi.getCuentaOrigenDestino().equals(cta));
+		assertTrue(debi.getCuentaDestino().equals(cta));
 	}
 	
 	@Test
@@ -129,12 +131,27 @@ public class MovimientoTest {
 		
 		debi = new TransferenciaDebito(fechaHoraOperacion, monto, descripcion, cta);
 
-		Set<ConstraintViolation<Movimiento>> violations = validator.validate(debi);
+		Set<ConstraintViolation<TransferenciaDebito>> violations = validator.validate(debi);
 		assertTrue(!violations.isEmpty());
 		assertEquals(4,violations.size());
 
 	}
 
+	@Test
+	public void testValidacionCamposObligatoriosTransCred() {
+		LocalDateTime fechaHoraOperacion = null;
+		float monto = 0F;
+		String descripcion = "";
+		Cuenta cta = null;
+		
+		cred = new TransferenciaCredito(fechaHoraOperacion, monto, descripcion, cta);
+
+		Set<ConstraintViolation<TransferenciaCredito>> violations = validator.validate(cred);
+		assertTrue(!violations.isEmpty());
+		assertEquals(4,violations.size());
+
+	}
+	
 	
 }
 
