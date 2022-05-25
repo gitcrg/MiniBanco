@@ -34,8 +34,6 @@ import lombok.experimental.SuperBuilder;
  */
 
 @Entity
-@NamedQueries({
-@NamedQuery(name="Cuenta.cuentaByMoneda", query="select cta from Cuenta cta where cta.moneda=:moneda")})
 public abstract class Cuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -132,18 +130,13 @@ public abstract class Cuenta {
 	}
 
 	
-	
+	//AGREGAR
 	public void agregarCotitular(Cliente cotitular) {
 		cotitulares.add(cotitular);
 	}
-
-
 	
 	public void agregarMovimiento(Movimiento movimiento) {
 		movimientos.add(movimiento);
 	}
-
-
-
 
 }

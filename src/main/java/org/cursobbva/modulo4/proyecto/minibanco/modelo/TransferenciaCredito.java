@@ -2,6 +2,7 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,6 @@ import javax.validation.constraints.NotNull;
 public class TransferenciaCredito extends Transferencia{
 	@ManyToOne
 	@NotNull(message = "{movimiento.cuentaOrigen}")
-//	@Column(updatable=false)
 	private Cuenta cuentaOrigen;
 
 	public TransferenciaCredito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion,	Cuenta cuentaOrigen) {

@@ -1,9 +1,9 @@
 package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+
 /**
  * 
  * @author Cristian Gutierrez

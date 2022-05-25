@@ -2,15 +2,16 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
 public abstract class DepositoExtraccion extends Movimiento{
 	

@@ -1,7 +1,6 @@
 package org.cursobbva.modulo4.proyecto.minibanco.uso;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
@@ -12,14 +11,10 @@ import javax.persistence.Persistence;
 import org.cursobbva.modulo4.proyecto.minibanco.daos.ClienteDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.daos.CuentaDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Compra;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Extraccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
 
 public class UsoMinibancoPersistenciaDAO {
 
@@ -51,13 +46,13 @@ public class UsoMinibancoPersistenciaDAO {
 		tx.begin();
 		
 		ClienteDAO clienteDao = new ClienteDAO(em);
-		clienteDao.save(cte1);
-		clienteDao.save(cte2);
-		clienteDao.save(cte3);
-		clienteDao.save(cte4);
-		clienteDao.save(cte5);
-		clienteDao.save(cte6);
-		clienteDao.save(cte7);
+		clienteDao.create(cte1);
+		clienteDao.create(cte2);
+		clienteDao.create(cte3);
+		clienteDao.create(cte4);
+		clienteDao.create(cte5);
+		clienteDao.create(cte6);
+		clienteDao.create(cte7);
 		clienteDao.delete(cte2);
 		cte3.setApellido("apellido update");
 		
@@ -69,10 +64,10 @@ public class UsoMinibancoPersistenciaDAO {
 		}
 
 		CuentaDAO cuentaDao = new CuentaDAO(em);
-		cuentaDao.save(ctaext1);
-		cuentaDao.save(ctaext2);
-		cuentaDao.save(ctaext3);
-		cuentaDao.save(ctaext4);
+		cuentaDao.create(ctaext1);
+		cuentaDao.create(ctaext2);
+		cuentaDao.create(ctaext3);
+		cuentaDao.create(ctaext4);
 		ctaext1.setSaldoInicial(654);
 		ctaext1.setSaldoActual(789);
 		

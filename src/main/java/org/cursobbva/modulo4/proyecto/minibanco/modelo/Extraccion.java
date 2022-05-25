@@ -4,11 +4,13 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
+
 @Entity
 public class Extraccion extends DepositoExtraccion{
 
@@ -17,7 +19,6 @@ public class Extraccion extends DepositoExtraccion{
 		// TODO Auto-generated constructor stub
 	}
 	public Extraccion() {}
-
 
 	
 }

@@ -4,45 +4,42 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
+import org.springframework.stereotype.Repository;
 
-public class ClienteDAO implements DAO<Cliente> {
-	EntityManager em;
-	
+@Repository("clienteDAO")
+public class ClienteDAO{
+	@PersistenceContext
+    private EntityManager em;
+
 	public ClienteDAO(EntityManager em) {
-	      this.em = em;
-	   }
-
-	public Cliente find(Long id) {
-		return em.find(Cliente.class, id);
+		super();
+		this.em = em;
 	}
+	public ClienteDAO() {}
 
-	public Cliente save(Cliente obj) {
+	public Cliente create(Cliente obj) {
 		// TODO Auto-generated method stub
-		checkTransaction();
 		em.persist(obj);
-		em.flush();
-		em.refresh(obj);
 		return obj;
 	}
 
 	public Cliente read(Long id) {
 		// TODO Auto-generated method stub
-		checkTransaction();
 		return em.find(Cliente.class, id);
 	}
 
 	public Cliente update(Cliente t) {
 		// TODO Auto-generated method stub
-		checkTransaction();
 		return (Cliente) em.merge(t);
 		
 	}
 
 	public void delete(Cliente t) {
 		// TODO Auto-generated method stub
-		checkTransaction();
 		t = em.merge(t);
 		em.remove(t);
 	}
@@ -51,16 +48,12 @@ public class ClienteDAO implements DAO<Cliente> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	private void checkTransaction() {
-		if (!em.getTransaction().isActive())
-			throw new RuntimeException("Transacción inactiva");
-	}
-	
+
+
 	@SuppressWarnings("unchecked")
 	public List<Cliente> getClientePorNombre(String nombre) {
 		return (List<Cliente>) em.createNamedQuery("Cliente.clientesByNombre").setParameter("nombre", nombre).getResultList();
 	}
-	
+
 	
 }

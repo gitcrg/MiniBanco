@@ -1,17 +1,8 @@
 package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 
@@ -32,8 +23,5 @@ public class CuentaLocal extends Cuenta{
 		super(fechaDeCreacion, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
 		// TODO Auto-generated constructor stub
 	}
-
-
-
 
 }

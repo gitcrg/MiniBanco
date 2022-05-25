@@ -3,21 +3,12 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
 
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Embeddable
 public class Direccion {
 	@NotEmpty(message = "{direccion.calle}")
@@ -87,9 +78,5 @@ public class Direccion {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
-	
-	
-	
-	
 	
 }

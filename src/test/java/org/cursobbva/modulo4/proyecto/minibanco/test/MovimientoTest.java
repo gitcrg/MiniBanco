@@ -22,8 +22,9 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Movimiento;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * 
  * @author Cristian Gutierrez
@@ -47,7 +48,7 @@ public class MovimientoTest {
 	Validator validator = factory.getValidator();
 
 	
-	@Before
+	@BeforeEach
 	public void crear() {
 		dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
 		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);

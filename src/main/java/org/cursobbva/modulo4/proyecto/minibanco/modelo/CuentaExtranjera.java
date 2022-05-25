@@ -21,6 +21,8 @@ import lombok.Setter;
  */
 
 @Entity
+@NamedQueries({
+@NamedQuery(name="Cuenta.cuentaByMoneda", query="select cta from Cuenta cta where cta.moneda=:moneda")})
 public class CuentaExtranjera extends Cuenta{
 
 	@Enumerated(EnumType.STRING)

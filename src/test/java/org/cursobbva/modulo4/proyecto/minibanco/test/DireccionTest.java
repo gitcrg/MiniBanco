@@ -10,8 +10,8 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 /**
  * 
  * @author Cristian Gutierrez
@@ -23,7 +23,7 @@ public class DireccionTest {
 	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	Validator validator = factory.getValidator();
 	
-	@Before
+	@BeforeEach
 	public void crearDireccion() {
 		//dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudadir", "codigoPostal1", "provincia1");
 	}

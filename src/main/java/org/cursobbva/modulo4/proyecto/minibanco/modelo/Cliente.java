@@ -17,12 +17,6 @@ import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
 /**
  * 
  * @author Cristian Gutierrez
@@ -46,7 +40,6 @@ public class Cliente {
 	@NotNull(message = "{cliente.direccion}")
 	private Direccion direccion;
 	@OneToMany (mappedBy = "titular")
-//	@Column(updatable=false)
 	private List<Cuenta> cuentasTitular = new ArrayList<Cuenta>();
 	@ManyToMany (mappedBy = "cotitulares")	
 	private List<Cuenta> cuentasCoTitular = new ArrayList<Cuenta>();
@@ -101,7 +94,7 @@ public class Cliente {
 	}
 	
 
-		
+	//AGREGAR
 	public void agregarCuentaTitular(Cuenta cuentaTitular) {
 		cuentasTitular.add(cuentaTitular);
 	}
@@ -110,6 +103,7 @@ public class Cliente {
 		cuentasCoTitular.add(cuentaCoTitular);
 	}	
 
+	//VALIDACIONES
 	@PrePersist
 	@PreUpdate
 	private void validate() {

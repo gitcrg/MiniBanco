@@ -16,9 +16,9 @@ import javax.validation.constraints.Positive;
 @Entity
 public abstract class CompraVenta extends Movimiento{
 	@Positive(message = "{movimiento.cotizacion}")
-//	@Column(updatable=false)
+	@Column(updatable=false)
 	private float cotizacion;
-	
+	@Column(updatable=false)
 	private float comision;
 
 	public CompraVenta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, float cotizacion,
@@ -44,7 +44,5 @@ public abstract class CompraVenta extends Movimiento{
 	public void setComision(float comision) {
 		this.comision = comision;
 	}
-	
-	
 
 }

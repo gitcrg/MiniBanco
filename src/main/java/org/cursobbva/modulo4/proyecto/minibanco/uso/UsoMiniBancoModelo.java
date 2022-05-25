@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Compra;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Extraccion;
