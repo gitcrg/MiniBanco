@@ -33,7 +33,7 @@
 		</property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop>
+<!-- 			<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop> -->	
 			</props>
 		</property>
 	</bean>
@@ -50,6 +50,6 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan
-		base-package="org.cursobbva.modulo4.proyecto.minibanco.daos,org.cursobbva.modulo4.proyecto.minibanco.uso">
+		base-package="org.cursobbva.modulo4.proyecto.minibanco.daos,org.cursobbva.modulo4.proyecto.minibanco.uso,org.cursobbva.modulo4.proyecto.minibanco.servicios">
 	</context:component-scan>
 </beans>

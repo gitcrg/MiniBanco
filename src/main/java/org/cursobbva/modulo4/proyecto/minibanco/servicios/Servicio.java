@@ -1,9 +1,10 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
-
+package org.cursobbva.modulo4.proyecto.minibanco.servicios;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolation;
 
 import org.cursobbva.modulo4.proyecto.minibanco.daos.ClienteDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.daos.CuentaDAO;
@@ -13,14 +14,17 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
+import org.cursobbva.modulo4.proyecto.minibanco.uso.UsoMinibancoPersistenciaDAOSpring;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class UsoMinibancoPersistenciaDAOSpring {
+public class Servicio {
 	
 	@Resource(name = "clienteDAO")
 	private ClienteDAO clienteDao;
@@ -28,37 +32,42 @@ public class UsoMinibancoPersistenciaDAOSpring {
 	@Resource(name = "cuentaDAO")
 	private CuentaDAO cuentaDao;
 	
-	@Resource(name = "movimientoDAO")
-	private MovimientoDAO movimientoDao;
-	
 	@Transactional
-	public void usar() {
-		System.out.println("Inicio Persistencia DAO...");
+	public void trxAgregarCotitular(Long idCliente, Long idCuenta) {
+
+		Cliente cte = clienteDao.read(idCliente);
+		Cuenta cta = cuentaDao.read(idCuenta);
+		Set<Cliente> cotitulares;
+
+		if (cta.getFechaDeCierre() != null) {
+			System.out.println("CUENTA CERRADA...");
+		}
+		if (cta.getTitular().getId() == cte.getId()) {
+			System.out.println("EL CLIENTE YA ES TITULAR DE LA CUENTA...");
+		}
+
+		cotitulares = cta.getCotitulares();
+		for(Cliente c : cotitulares){
+			if(c.getId() == cta.getTitular().getId())
+			System.out.println("EL CLIENTE YA ES COTITULAR");
+		}
+
 		
-		Direccion dir1 = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
-		Cliente cte1 = new Cliente("nombrecte1", "apellido", "telefono", "email", dir1);
-		clienteDao.create(cte1);
-		Cliente cte2 = new Cliente("nombrecte2", "apellido2", "telefono", "email", dir1);
-		clienteDao.create(cte2);
-		Cuenta ctaext1 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
-		cuentaDao.create(ctaext1);
+		cta.agregarCotitular(cte);
+
 		
 	}
-
-	public static void main(String[] args) {
+	
+	public void agregarCotitular(Long idCliente, Long idCuenta) {
 		// TODO Auto-generated method stub
-		
+
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/contexto-jpa.xml");
-		UsoMinibancoPersistenciaDAOSpring um = ctx.getBean("usoMinibancoPersistenciaDAOSpring",UsoMinibancoPersistenciaDAOSpring.class);
-		um.usar();
+		Servicio um = ctx.getBean("servicio",Servicio.class);
+		um.trxAgregarCotitular(idCliente,idCuenta);
 		
 		((ConfigurableApplicationContext) ctx).close();
-
-		
-		System.out.println("Fin Persistencia DAO...");
- 
 		
 	}
 
-}
 
+}

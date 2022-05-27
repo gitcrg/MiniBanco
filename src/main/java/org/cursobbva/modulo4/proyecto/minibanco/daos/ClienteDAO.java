@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository("clienteDAO")

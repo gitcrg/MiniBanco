@@ -35,8 +35,8 @@ public class UsoMinibancoPersistenciaDAO {
 		Cliente cte6 = new Cliente("nombrecte3", "apellido", "telefono", "email", dir3);
 		Cliente cte7 = new Cliente("nombrecte2", "apellido", "telefono", "email", dir3);
 		
-		Cuenta ctaext1 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
-		Cuenta ctaext2 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
+		Cuenta ctaext1 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, null, cte1, TipoMoneda.DOLAR);
+		Cuenta ctaext2 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, null, cte1, TipoMoneda.DOLAR);
 		Cuenta ctaext3 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
 		Cuenta ctaext4 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
 	
