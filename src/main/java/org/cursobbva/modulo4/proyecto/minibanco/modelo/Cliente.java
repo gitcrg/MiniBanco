@@ -27,7 +27,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name="Cliente.clientesByNombre", query="select cte from Cliente cte where cte.nombre=:nombre")})
+@NamedQuery(name="Cliente.clientesByNombre", query="select cte from Cliente cte where cte.nombre=:nombre"),
+@NamedQuery(name="Cliente.clientesAll", query="select cte from Cliente cte")
+})
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

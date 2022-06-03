@@ -2,6 +2,7 @@ package org.cursobbva.modulo4.proyecto.minibanco.servicios;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -56,6 +57,16 @@ public class Servicio {
 	@Transactional
 	public Cliente leerClienteById(long idCliente) {
 		return clienteDao.read(idCliente);
+	}
+	
+	@Transactional
+	public List<Cliente> listarClientes() {
+		return (List<Cliente>) clienteDao.readAll();
+	}
+	
+	@Transactional
+	public List<Cliente> listarClientesNombre(String nombre) {
+		return (List<Cliente>) clienteDao.getClientePorNombre(nombre);
 	}
 	
 	@Transactional

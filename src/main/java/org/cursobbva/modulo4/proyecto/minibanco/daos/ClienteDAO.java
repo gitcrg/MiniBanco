@@ -45,9 +45,10 @@ public class ClienteDAO{
 		em.remove(t);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Collection<Cliente> readAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return (List<Cliente>) em.createNamedQuery("Cliente.clientesAll").getResultList();
 	}
 
 
