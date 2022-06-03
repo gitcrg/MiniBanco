@@ -35,10 +35,10 @@ public abstract class Movimiento {
 	@NotEmpty(message = "{movimiento.descripcion}")
 	@Column(updatable=false)
 	private String descripcion;
-	@ManyToOne
-	@JoinColumn(name="Cuenta_Id")
-//	@NotNull(message = "{movimiento.cuenta}")
-	private Cuenta cuenta;
+//	@ManyToOne
+//	@JoinColumn(name="Cuenta_Id")
+////	@NotNull(message = "{movimiento.cuenta}")
+//	private Cuenta cuenta;
 	
 
 	//CONSTRUCTORES
@@ -77,12 +77,12 @@ public abstract class Movimiento {
 		this.descripcion = descripcion;
 	}
 
-	public Cuenta getCuenta() {
-		return cuenta;
-	}
-	public void setCuenta(Cuenta cuenta) {
-		this.cuenta = cuenta;
-	}
+//	public Cuenta getCuenta() {
+//		return cuenta;
+//	}
+//	public void setCuenta(Cuenta cuenta) {
+//		this.cuenta = cuenta;
+//	}
 	
 	
 }

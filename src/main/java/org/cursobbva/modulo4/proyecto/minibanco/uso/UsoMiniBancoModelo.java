@@ -39,8 +39,8 @@ public class UsoMiniBancoModelo {
 		Compra cmpr1 = new Compra(LocalDateTime.now(), 50F, "compra dolar", 200F, 0F);
 		Extraccion extra1 = new Extraccion(LocalDateTime.now(),300F, "extraccion", "cajero1");
 		
-		ctaLoc1.agregarMovimiento(tranCred1);tranCred1.setCuenta(ctaLoc1);
-		ctaLoc1.agregarMovimiento(extra1);extra1.setCuenta(ctaLoc1);
+		ctaLoc1.agregarMovimiento(tranCred1);//tranCred1.setCuenta(ctaLoc1);
+		ctaLoc1.agregarMovimiento(extra1);//extra1.setCuenta(ctaLoc1);
 		ctaLoc1.agregarMovimiento(cmpr1);
 	
 	

@@ -24,4 +24,9 @@ public class CuentaLocal extends Cuenta{
 		// TODO Auto-generated constructor stub
 	}
 
+	public void agregarMovimiento(Venta vta) {
+		setSaldoActual(getSaldoActual() + (vta.getMonto()*vta.getCotizacion()));
+		this.getMovimientos().add(vta);
+	}
+
 }

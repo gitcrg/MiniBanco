@@ -59,7 +59,7 @@ public class CuentaTest {
 	
 	@Test
 	public void testContructorCuentaExtranjeraOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 0F, null, cte, TipoMoneda.DOLAR );
+		cta = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 0F, null, cte, TipoMoneda.USD );
 		LocalDate fechacreacion = LocalDate.now();
 		float saldoInicial = 0F;
 		float saldoActual = 0F;

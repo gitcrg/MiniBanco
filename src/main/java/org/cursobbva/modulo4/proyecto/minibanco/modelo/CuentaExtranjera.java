@@ -22,7 +22,7 @@ import lombok.Setter;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name="Cuenta.cuentaByMoneda", query="select cta from Cuenta cta where cta.moneda=:moneda")})
+@NamedQuery(name="Cuenta.cuentaByMoneda", query="select cta from CuentaExtranjera cta where cta.moneda=:moneda")})
 public class CuentaExtranjera extends Cuenta{
 
 	@Enumerated(EnumType.STRING)
@@ -44,6 +44,11 @@ public class CuentaExtranjera extends Cuenta{
 		this.moneda = moneda;
 	}
 
+	
+	public void agregarMovimiento(Venta vta) {
+		setSaldoActual(getSaldoActual() - vta.getMonto());
+		this.getMovimientos().add(vta);
+	}
 	
 	
 }

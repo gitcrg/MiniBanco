@@ -26,14 +26,14 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="baseDeDatos" />
 		<property name="packagesToScan"
-			value="org.cursobbva.modulo4.proyecto.minibanco.modelo,org.cursobbva.modulo4.proyecto.minibanco.daos" />
+			value="org.cursobbva.modulo4.proyecto.minibanco.modelo" />
 		<property name="jpaVendorAdapter">
 			<bean
 				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 		<property name="jpaProperties">
 			<props>
-<!-- 			<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop> -->	
+ 				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop> 		
 			</props>
 		</property>
 	</bean>
@@ -50,6 +50,6 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan
-		base-package="org.cursobbva.modulo4.proyecto.minibanco.daos,org.cursobbva.modulo4.proyecto.minibanco.uso,org.cursobbva.modulo4.proyecto.minibanco.servicios">
+		base-package="org.cursobbva.modulo4.proyecto.minibanco.daos,org.cursobbva.modulo4.proyecto.minibanco.uso,org.cursobbva.modulo4.proyecto.minibanco.servicios,org.cursobbva.modulo4.minibanco.implem">
 	</context:component-scan>
 </beans>

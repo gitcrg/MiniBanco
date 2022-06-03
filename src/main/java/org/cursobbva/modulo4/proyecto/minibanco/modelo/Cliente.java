@@ -3,6 +3,7 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -31,10 +33,13 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotEmpty(message = "{cliente.nombre}")
+	@Column(nullable = false)
 	private String nombre;
 	@NotEmpty(message = "{cliente.apellido}")
+	@Column(nullable = false)
 	private String apellido;
 	private String telefono;
+//	@Email(message = "{cliente.email}")
 	private String email;
 	@Embedded
 	@NotNull(message = "{cliente.direccion}")
@@ -103,6 +108,10 @@ public class Cliente {
 		cuentasCoTitular.add(cuentaCoTitular);
 	}	
 
+	public boolean cuentaDelCliente(Cuenta cta) {
+		return this.cuentasTitular.contains(cta) || this.cuentasCoTitular.contains(cta);
+	}
+	
 	//VALIDACIONES
 	@PrePersist
 	@PreUpdate

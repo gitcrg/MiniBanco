@@ -40,7 +40,7 @@ public class UsoMinibancoPersistenciaDAOSpring {
 		clienteDao.create(cte1);
 		Cliente cte2 = new Cliente("nombrecte2", "apellido2", "telefono", "email", dir1);
 		clienteDao.create(cte2);
-		Cuenta ctaext1 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
+		Cuenta ctaext1 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.USD);
 		cuentaDao.create(ctaext1);
 		
 	}

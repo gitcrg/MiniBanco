@@ -42,12 +42,12 @@ public class UsoMiniBancoPersistencia {
 		Compra cmpr1 = new Compra(LocalDateTime.now(), 50F, "compra dolar", 200F, 0F);
 		Extraccion extra1 = new Extraccion(LocalDateTime.now(),300F, "extraccion", "cajero1");
 		
-		ctaLoc1.agregarMovimiento(tranCred1);tranCred1.setCuenta(ctaLoc1);
-		ctaLoc1.agregarMovimiento(extra1);extra1.setCuenta(ctaLoc1);
-		ctaLoc1.agregarMovimiento(cmpr1);
+		ctaLoc1.agregarMovimiento(tranCred1);//tranCred1.setCuenta(ctaLoc1);
+		ctaLoc1.agregarMovimiento(extra1);//extra1.setCuenta(ctaLoc1);
+		ctaLoc1.agregarMovimiento(cmpr1);//cmpr1.setCuenta(ctaLoc1);
 	
-		Cuenta ctaext3 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
-		Cuenta ctaext4 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.DOLAR);
+		Cuenta ctaext3 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.USD);
+		Cuenta ctaext4 = new CuentaExtranjera(LocalDate.now(), 0F, 0F, 1000F, LocalDate.now(), cte1, TipoMoneda.USD);
 		
 		
 		

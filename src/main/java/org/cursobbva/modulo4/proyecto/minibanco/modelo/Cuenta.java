@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public abstract class Cuenta {
 	private Cliente titular;
 	@ManyToMany
 	private Set<Cliente> cotitulares = new HashSet<Cliente>();
-	@OneToMany(mappedBy = "cuenta")
+	@OneToMany(fetch = FetchType.EAGER)//(mappedBy = "cuenta")
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
 
@@ -66,7 +67,7 @@ public abstract class Cuenta {
 		super();
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.saldoInicial = saldoInicial;
-		this.saldoActual = saldoActual;
+		this.saldoActual = saldoInicial;
 		this.descubiertoAcordado = descubiertoAcordado;
 		this.fechaDeCierre = fechaDeCierre;
 		this.titular = titular;
@@ -139,4 +140,20 @@ public abstract class Cuenta {
 		movimientos.add(movimiento);
 	}
 
+	public void agregarMovimiento(TransferenciaCredito trfcrdt) {
+		saldoActual = saldoActual + trfcrdt.getMonto();
+		movimientos.add(trfcrdt);
+	}
+	
+	public void agregarMovimiento(TransferenciaDebito trfdbt) {
+		saldoActual = saldoActual - trfdbt.getMonto();
+		movimientos.add(trfdbt);
+	}
+
+	public abstract void agregarMovimiento(Venta vta);
+	
+	public TipoMoneda getMoneda() {
+		return null;
+	}
+	
 }
