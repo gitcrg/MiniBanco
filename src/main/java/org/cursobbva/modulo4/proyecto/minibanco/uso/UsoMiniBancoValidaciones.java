@@ -18,11 +18,10 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
 public class UsoMiniBancoValidaciones {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 
-		System.out.println("Inicio Validacion Direccion...");
+		System.out.println("---------- INICIO VALIDACION DIRECCION ----------");
 		Direccion dir = new Direccion("", "", "", "", "", "", "");
 		
 		Set<ConstraintViolation<Direccion>> violationsDir = validator.validate(dir);
@@ -33,11 +32,11 @@ public class UsoMiniBancoValidaciones {
 				System.out.println(violation.getMessage()); 
 			}
 		}
-		System.out.println("Fin Validacion Direccion...");
+		System.out.println("---------- FINAL VALIDACION DIRECCION ----------");
 		
-		System.out.println("Inicio Validacion Cliente...");
+		System.out.println("---------- INICIO VALIDACION CLIENTE ----------");
 		
-		Cliente cte = new Cliente("", "", "", "", null);
+		Cliente cte = new Cliente("name", "ape", "", "", null);
 		
 		Set<ConstraintViolation<Cliente>> violationsCte = validator.validate(cte);
 		if (violationsCte.isEmpty()) {
@@ -48,11 +47,11 @@ public class UsoMiniBancoValidaciones {
 			}
 		}
 		
-		System.out.println("Fin Validacion Cliente...");
+		System.out.println("---------- FINAL VALIDACION CLIENTE ----------");
 		
-		System.out.println("Inicio Validacion Cuenta...");
+		System.out.println("---------- INICIO VALIDACION CUENTA ----------");
 		
-		Cuenta cta = new CuentaLocal(null, -1F, -1F, -1F, null, null);
+		Cuenta cta = new CuentaLocal(null, -1D, -1D, -1D, null, null);
 		
 		Set<ConstraintViolation<Cuenta>> violationsCta = validator.validate(cta);
 		if (violationsCta.isEmpty()) {
@@ -63,11 +62,11 @@ public class UsoMiniBancoValidaciones {
 			}
 		}
 		
-		System.out.println("Fin Validacion Cuenta...");
+		System.out.println("---------- FINAL VALIDACION CUENTA ----------");
 
-		System.out.println("Inicio Validacion Movimiento...");
+		System.out.println("---------- INICIO VALIDACION MOVIMIENTO ----------");
 		
-		Movimiento debi = new TransferenciaDebito(null, -1F, "", null);
+		Movimiento debi = new TransferenciaDebito(null, 0D, "", null);
 		
 		Set<ConstraintViolation<Movimiento>> violationsMov = validator.validate(debi);
 		if (violationsMov.isEmpty()) {
@@ -78,11 +77,11 @@ public class UsoMiniBancoValidaciones {
 			}
 		}
 		
-		System.out.println("Fin Validacion Movimiento...");
+		System.out.println("---------- FINAL VALIDACION MOVIMIENTO ----------");
 
-		System.out.println("Inicio Validacion Movimiento...");
+		System.out.println("---------- INICIO VALIDACION MOVIMIENTO ----------");
 		
-		Movimiento cred = new TransferenciaCredito(null, -1F, "", null);
+		Movimiento cred = new TransferenciaCredito(null, 0D, "", null);
 		
 		Set<ConstraintViolation<Movimiento>> violationsMov2 = validator.validate(cred);
 		if (violationsMov2.isEmpty()) {
@@ -93,7 +92,7 @@ public class UsoMiniBancoValidaciones {
 			}
 		}
 		
-		System.out.println("Fin Validacion Movimiento...");
+		System.out.println("---------- FINAL VALIDACION MOVIMIENTO ----------");
 
 		
 

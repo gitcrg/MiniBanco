@@ -5,19 +5,22 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
 @Entity
+@Data
+@NoArgsConstructor
 public class Deposito extends DepositoExtraccion{
 
-	public Deposito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, String cajaCajero) {
-		super(fechayHoraDeRealizacion, monto, descripcion, cajaCajero);
-		// TODO Auto-generated constructor stub
-	}
-	public Deposito() {}
+	public Deposito(LocalDateTime fechayHora, Double monto, String descripcion, String cajaCajero) {
+		super(fechayHora, monto, descripcion, cajaCajero);
 
+	}
 	
 }

@@ -1,8 +1,8 @@
-package org.cursobbva.modulo4.minibanco.implem;
+package org.cursobbva.modulo4.proyecto.minibanco.implem;
 
 import java.io.IOException;
 
-import org.cursobbva.modulo4.minibanco.interf.ResultadoCambio;
+import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -17,13 +17,13 @@ public class ResultadoCambioDeserializer extends JsonDeserializer<ResultadoCambi
 		JsonNode nodo = jp.getCodec().readTree(jp);
 		return new ResultadoCambio() {
 			@Override
-			public Float getTasa() {
-				return (float) nodo.get("info").get("rate").asDouble(); 
+			public Double getTasa() {
+				return nodo.get("info").get("rate").asDouble(); 
 			}
 
 			@Override
-			public Float getResultado() {
-				return (float) nodo.get("result").asDouble();
+			public Double getResultado() {
+				return nodo.get("result").asDouble();
 			}
 		};
 	}

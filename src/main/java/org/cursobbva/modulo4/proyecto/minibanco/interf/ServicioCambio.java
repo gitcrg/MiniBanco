@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.minibanco.interf;
+package org.cursobbva.modulo4.proyecto.minibanco.interf;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
 
@@ -14,5 +14,5 @@ public interface ServicioCambio {
 	 * @param monto a convertir
 	 * @return el resultado de la operación de cambio
 	 */
-	public ResultadoCambio cambiar(TipoMoneda de, TipoMoneda a, Float monto);
+	public ResultadoCambio cambiar(TipoMoneda de, TipoMoneda a, Double monto);
 }

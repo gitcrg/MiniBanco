@@ -1,12 +1,12 @@
-package org.cursobbva.modulo4.minibanco.implem;
+package org.cursobbva.modulo4.proyecto.minibanco.implem;
 
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cursobbva.modulo4.minibanco.interf.ResultadoCambio;
-import org.cursobbva.modulo4.minibanco.interf.ServicioCambio;
+import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
+import org.cursobbva.modulo4.proyecto.minibanco.interf.ServicioCambio;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +27,7 @@ public class ServicioCambioImplem implements ServicioCambio{
 	String queryCambiar = "convert?to={to}&from={from}&amount={amount}";
     		
 	@Override
-	public ResultadoCambio cambiar(TipoMoneda de, TipoMoneda a, Float monto) {
+	public ResultadoCambio cambiar(TipoMoneda de, TipoMoneda a, Double monto) {
 		// TODO Auto-generated method stub
 		
 		variables.put("from", de.toString());

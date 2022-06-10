@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.daos;
+package org.cursobbva.modulo4.proyecto.minibanco.dao;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,32 +29,32 @@ public class MovimientoDAO{
 	}
 
 	public Movimiento create(Movimiento obj) {
-		// TODO Auto-generated method stub
 		em.persist(obj);
 		return obj;
 	}
 
 	public Movimiento read(Long id) {
-		// TODO Auto-generated method stub
 		return em.find(Movimiento.class, id);
 	}
 
 	public Movimiento update(Movimiento t) {
-		// TODO Auto-generated method stub
 		return (Movimiento) em.merge(t);
 		
 	}
 
 	public void delete(Movimiento t) {
-		// TODO Auto-generated method stub
 		t = em.merge(t);
 		em.remove(t);
 	}
 
 	public Collection<Movimiento> readAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getMovimientosPorCuenta(Long idCuenta) {
+		return (List<Movimiento>) em.createNamedQuery("MOVIMIENTOS.movimientoByCuenta").setParameter("idCuenta", idCuenta).getResultList();
+//		return (List<Movimiento>) em.createNamedQuery("MOVIMIENTO.movimientoByCuenta").getResultList();
+	}
 
 }

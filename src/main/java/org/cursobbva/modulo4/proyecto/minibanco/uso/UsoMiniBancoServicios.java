@@ -2,7 +2,10 @@ package org.cursobbva.modulo4.proyecto.minibanco.uso;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-import org.cursobbva.modulo4.proyecto.minibanco.servicios.Servicio;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.Servicio;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCliente;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCuenta;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioMovimiento;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,9 +14,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class UsoMiniBancoServicios {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/contexto-jpa.xml");
-		Servicio servicio = ctx.getBean("servicio", Servicio.class);
+		ServicioCliente servicioCliente = ctx.getBean("servicioCliente", ServicioCliente.class);
+		ServicioCuenta servicioCuenta = ctx.getBean("servicioCuenta", ServicioCuenta.class);
+		ServicioMovimiento servicioMovimiento = ctx.getBean("servicioMovimiento", ServicioMovimiento.class);
 		
 		Direccion dir1 = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
 		Direccion dir2 = new Direccion("calle2", "numero2", "departamento2", "piso2", "ciudad2", "codigoPostal2", "provincia2");
@@ -21,58 +25,59 @@ public class UsoMiniBancoServicios {
 		
 		
 		try {
-			servicio.altaCliente("nombrecte1", "apellido1", "tel1", "email", dir1);
-			servicio.altaCliente("nombrecte2", "apellido2", "tel2", "email", dir2);
-			servicio.altaCliente("nombrecte3", "apellido3", "tel3", "email", dir3);
-			servicio.altaCliente("nombrecte3", "apellido4", "tel4", "email", dir3);
-			servicio.altaCliente("nombrecte2", "apellido5", "tel5", "email", dir3);
-			servicio.altaCliente("nombrecte3", "apellido6", "tel6", "email", dir3);
-			servicio.altaCliente("nombrecte3", "apellido7", "tel7", "email", dir1);
+			servicioCliente.altaCliente("nombrecte1", "apellido1", "tel1", "email1@email.com", dir1);
+			servicioCliente.altaCliente("nombrecte2", "apellido2", "tel2", "email2@email.com", dir2);
+			servicioCliente.altaCliente("nombrecte3", "apellido3", "tel3", "email3@email.com", dir3);
+			servicioCliente.altaCliente("nombrecte3", "apellido4", "tel4", "email4@email.com", dir3);
+			servicioCliente.altaCliente("nombrecte2", "apellido5", "tel5", "email5@email.com", dir3);
+			servicioCliente.altaCliente("nombrecte3", "apellido6", "tel6", "email6@email.com", dir3);
+			servicioCliente.altaCliente("nombrecte3", "apellido7", "tel7", "email7@email.com", dir1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
 		try {
-			servicio.altaCuenta(1000F, 10000, 1L, TipoMoneda.USD);
-			servicio.altaCuenta(2000F, 10000, 2L, TipoMoneda.USD);
-			servicio.altaCuenta(3000F, 12220, 3L, TipoMoneda.USD);
-			servicio.altaCuenta(4000F, 511550, 1L, TipoMoneda.EUR);
-			servicio.altaCuenta(5000F, 1510, 2L, TipoMoneda.EUR);
-			servicio.altaCuenta(1000F, 115260, 3L, TipoMoneda.EUR);
-			servicio.altaCuenta(2000F, 112250, 1L, null);
-			servicio.altaCuenta(3000F, 112150, 2L, null);
-			servicio.altaCuenta(4000F, 11520, 3L, null);
-			servicio.altaCuenta(5000F, 225000, 4L, null);
+			servicioCuenta.altaCuenta(1000D, 10000D, 1L, TipoMoneda.USD);
+			servicioCuenta.altaCuenta(2000D, 10000D, 2L, TipoMoneda.USD);
+			servicioCuenta.altaCuenta(3000D, 12220D, 3L, TipoMoneda.USD);
+			servicioCuenta.altaCuenta(4000D, 511550D, 1L, TipoMoneda.EUR);
+			servicioCuenta.altaCuenta(5000D, 1510D, 2L, TipoMoneda.EUR);
+			servicioCuenta.altaCuenta(1000D, 115260D, 3L, TipoMoneda.EUR);
+			servicioCuenta.altaCuenta(2000D, 112250D, 1L, null);
+			servicioCuenta.altaCuenta(3000D, 112150D, 2L, null);
+			servicioCuenta.altaCuenta(4000D, 11520D, 3L, null);
+			servicioCuenta.altaCuenta(5000D, 225000D, 4L, null);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
 		try {
-			servicio.agregarCotitular(1L, 2L);
+			servicioCuenta.agregarCotitular(1L, 2L);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
 		try {
-			servicio.agregarCotitular(1L, 2L);
+			servicioCuenta.agregarCotitular(4L, 3L);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
 		try {
-			servicio.agregarCotitular(2L, 10L);
+			servicioCuenta.agregarCotitular(2L, 10L);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
 		try {
-			servicio.transferir(1L, 2L, 10F);
+			servicioMovimiento.transferir(1L, 2L, 10D);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	
 		try {
-			servicio.vender(1L, 1L, 7L, 15F);
+			servicioMovimiento.vender(1L, 1L, 7L, 25.0);
+//			servicioMovimiento.vender(1L, 5L, 1L, 15.0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

@@ -1,6 +1,6 @@
-package org.cursobbva.modulo4.minibanco.interf;
+package org.cursobbva.modulo4.proyecto.minibanco.interf;
 
-import org.cursobbva.modulo4.minibanco.implem.ResultadoCambioDeserializer;
+import org.cursobbva.modulo4.proyecto.minibanco.implem.ResultadoCambioDeserializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -9,11 +9,11 @@ public interface ResultadoCambio {
 	/**
 	 * @return Tasa aplicada al cambio
 	 */
-	public Float getTasa();
+	public Double getTasa();
 
 	/**
 	 * @return El resultado de la conversion
 	 */
-	public Float getResultado();
+	public Double getResultado();
 
 }

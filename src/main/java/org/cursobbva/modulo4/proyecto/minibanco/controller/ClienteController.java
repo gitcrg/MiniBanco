@@ -1,9 +1,11 @@
-package org.cursobbva.modulo4.minibanco.controller;
+package org.cursobbva.modulo4.proyecto.minibanco.controller;
 
 import java.util.List;
 
+import org.cursobbva.modulo4.proyecto.minibanco.dto.ClienteModifDireccionDTO;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
-import org.cursobbva.modulo4.proyecto.minibanco.servicios.Servicio;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.Servicio;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClienteController {
 
 	@Autowired
-	Servicio servicioCliente;
+	ServicioCliente servicioCliente;
 
 	@GetMapping("/")
 	public List<Cliente> listar() {
@@ -38,11 +40,10 @@ public class ClienteController {
 		return new ResponseEntity<Cliente>(servicioCliente.leerClienteById(idCliente), HttpStatus.FOUND);
 	}
 
-//	@PutMapping("/cambiarDireccion")
-//	@ResponseStatus(HttpStatus.ACCEPTED)
-//	public void cambiarDireccion(@RequestBody RequestClienteCambiarDir requestClienteCambiarDir) {
-//		servicioCliente.cambiarDireccion(requestClienteCambiarDir.getIdCliente(),
-//				requestClienteCambiarDir.getDireccion());
-//	}
+	@PutMapping("/modificarDireccion")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public void modificarDireccion(@RequestBody ClienteModifDireccionDTO clienteModifDireccionDTO) {
+		servicioCliente.cambiarDireccionCliente(clienteModifDireccionDTO.getIdCliente(), clienteModifDireccionDTO.getNuevaDirecc());
+	}
 
 }

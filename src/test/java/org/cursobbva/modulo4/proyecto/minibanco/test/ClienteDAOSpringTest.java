@@ -10,7 +10,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
-import org.cursobbva.modulo4.proyecto.minibanco.daos.ClienteDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.dao.ClienteDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,12 +30,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:/spring/contexto-jpa.xml")
+@ContextConfiguration("classpath:/spring/contexto-jpa-test.xml")
 @Transactional
 class ClienteDAOSpringTest {
 
 	@Autowired
-	private ClienteDAO clienteDao;
+	private ClienteDAO cteDao;
     @PersistenceContext
     private EntityManager em;     
 	
@@ -44,52 +44,61 @@ class ClienteDAOSpringTest {
 
 	@BeforeEach
 	public void inicioCadaTest() {
-//		cteDao = new ClienteDAO(em);
 		dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
 	}
 
 	
     @Test
 	public void testCreateClienteOk() {
-		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
-		clienteDao.create(cte);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cteDao.create(cte);
  		em.flush();
  		assertNotNull(cte.getId());
- 		
  		em.clear();
- 		Cliente cteb = em.find(Cliente.class, cte.getId());
- 		assertNotNull(cteb);
- 		assertFalse(cte == cteb);
- 		assertEquals(cte.getNombre(), cteb.getNombre());
+ 		Cliente cteguardado = em.find(Cliente.class, cte.getId());
+ 		assertNotNull(cteguardado);
+ 		assertFalse(cte == cteguardado);
+ 		assertEquals(cte.getNombre(), cteguardado.getNombre());
 	}
     
 	@Test
 	public void testReadClienteOk() {
-		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
-		clienteDao.create(cte);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cteDao.create(cte);
 		em.flush();
-		Cliente cteguardado = clienteDao.read(cte.getId());
-		assertTrue(cteguardado.equals(cte));
+ 		assertNotNull(cte.getId());
+ 		em.clear();
+		Cliente cteguardado = cteDao.read(cte.getId());
+ 		assertNotNull(cteguardado);
+ 		assertFalse(cte == cteguardado);
+ 		assertEquals(cte.getNombre(), cteguardado.getNombre());
 	}
 
 	@Test
 	public void testUpdateClienteOk() {
-		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
-		clienteDao.create(cte);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cteDao.create(cte);
 		em.flush();
+ 		assertNotNull(cte.getId());
+ 		em.clear();
 		cte.setNombre("nuevo nombre");
-		Cliente cteActualizado = clienteDao.read(cte.getId());
+		cteDao.update(cte);
+		em.flush();
+		Cliente cteActualizado = cteDao.read(cte.getId());
 		assertEquals("nuevo nombre",cteActualizado.getNombre());
 	}
 
 	@Test
 	public void testDeleteClienteOk() {
-		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
-		clienteDao.create(cte);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cteDao.create(cte);
 		em.flush();
-		assertTrue(em.contains(cte));
-		clienteDao.delete(cte);
-		assertTrue(!em.contains(cte));
+ 		assertNotNull(cte.getId());
+ 		em.clear();
+		Cliente cteActualizado = cteDao.read(cte.getId());
+		assertTrue(em.contains(cteActualizado));
+		cteDao.delete(cteActualizado);
+		assertTrue(!em.contains(cteActualizado));
 	}
 	
 //	@Test
@@ -97,12 +106,12 @@ class ClienteDAOSpringTest {
 //		cte = new Cliente(null,"apellido", "telefono", "email", dir);
 //		
 //		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {
-//			clienteDao.create(cte);
+//			cteDao.create(cte);
 //			}
 //		);
 //		assertEquals("Nombre Invalido", excep.getMessage());
 //	}
-
+//
 //	@Test
 //	public void testCreateClienteErrorApellido() {
 //		cte = new Cliente("nombre","", "telefono", "email", dir);

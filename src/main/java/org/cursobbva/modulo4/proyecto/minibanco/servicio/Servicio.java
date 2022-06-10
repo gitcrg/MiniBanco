@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.servicios;
+package org.cursobbva.modulo4.proyecto.minibanco.servicio;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,12 +8,12 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.validation.ConstraintViolation;
 
-import org.cursobbva.modulo4.minibanco.implem.ResultadoCambioImplem;
-import org.cursobbva.modulo4.minibanco.implem.ServicioCambioImplem;
-import org.cursobbva.modulo4.minibanco.interf.ResultadoCambio;
-import org.cursobbva.modulo4.proyecto.minibanco.daos.ClienteDAO;
-import org.cursobbva.modulo4.proyecto.minibanco.daos.CuentaDAO;
-import org.cursobbva.modulo4.proyecto.minibanco.daos.MovimientoDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.dao.ClienteDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.dao.CuentaDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.dao.MovimientoDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.implem.ResultadoCambioImplem;
+import org.cursobbva.modulo4.proyecto.minibanco.implem.ServicioCambioImplem;
+import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
@@ -70,8 +70,23 @@ public class Servicio {
 	}
 	
 	@Transactional
-	public Cuenta altaCuenta(float saldoInicial, float descubiertoAcordado,	Long idTitular, TipoMoneda moneda) {
-		
+	public void cambiarDireccionCliente(Long idCliente, Direccion nuevaDireccion) {
+		Cliente cliente = clienteDao.read(idCliente);
+
+		if (cliente == null) {
+			throw new IllegalArgumentException("cliente inexistente.");
+		}
+		cliente.setDireccion(nuevaDireccion);
+
+	}
+
+	
+	
+	
+	
+	
+	@Transactional
+	public Cuenta altaCuenta(Double saldoInicial, Double descubiertoAcordado,	Long idTitular, TipoMoneda moneda) {
 		Cliente titular = clienteDao.read(idTitular);
 		
 		if (titular.getId() == null) {
@@ -79,9 +94,9 @@ public class Servicio {
 		}
 		Cuenta cuenta;
 		if (moneda == null) {
-			cuenta = new CuentaLocal(LocalDate.now(), saldoInicial, 0F, 0F, null, titular);
+			cuenta = new CuentaLocal(LocalDate.now(), saldoInicial, 0D, 0D, null, titular);
 		} else {
-			cuenta = new CuentaExtranjera(LocalDate.now(), saldoInicial, 0F, 0F, null, titular, moneda);
+			cuenta = new CuentaExtranjera(LocalDate.now(), saldoInicial, 0D, 0D, null, titular, moneda);
 		}
 		return cuentaDao.create(cuenta);
 	}
@@ -92,48 +107,46 @@ public class Servicio {
 	}
 	
 	@Transactional
-	public void agregarCotitular(Long idCliente, Long idCuenta) {
+	public List<Cuenta> listarCuentas() {
+		return (List<Cuenta>) cuentaDao.readAll();
+	}
+	
+	@Transactional
+	public Cuenta agregarCotitular(Long idCliente, Long idCuenta) {
 
 		Cliente cte = clienteDao.read(idCliente);
 		Cuenta cta = cuentaDao.read(idCuenta);
 		Set<Cliente> cotitulares;
 
 		if (cte == null) {			
-			System.out.println("CLIENTE IONEXISTENTE...");
 			throw new IllegalArgumentException("CLIENTE IONEXISTENTE");
 		}		
 		
 		if (cta == null) {			
-			System.out.println("CUENTA IONEXISTENTE...");
 			throw new IllegalArgumentException("CUENTA IONEXISTENTE");
 		}		
 		
-		if (cta.getFechaDeCierre() != null) {			
-			System.out.println("CUENTA CERRADA...");
+		if (!cta.cuentaAbierta()) {			
 			throw new IllegalArgumentException("CUENTA CERRADA");
 		}
 		if (cta.getTitular().getId() == cte.getId()) {
-			System.out.println("EL CLIENTE YA ES TITULAR DE LA CUENTA...");
 			throw new IllegalArgumentException("EL CLIENTE YA ES TITULAR DE LA CUENTA");
 		}
 		cotitulares = cta.getCotitulares();
-		System.out.println("TAMAÑO COTITULARES !!!!!" + cotitulares.size());
 		for(Cliente c : cotitulares){ 
 			if(c.getId() == cte.getId())
-			System.out.println("EL CLIENTE YA ES COTITULAR");
 			throw new IllegalArgumentException("EL CLIENTE YA ES COTITULAR DE LA CUENTA");
 		}
-
 		
 		cta.agregarCotitular(cte);
-		cte.agregarCuentaCoTitular(cta);
-
+//		cte.agregarCuentaCoTitular(cta);
+		return cta;
 		
 	}
 
 	
 	@Transactional
-	public void transferir(Long idOrigen, Long idDestino, Float monto) {
+	public void transferir(Long idOrigen, Long idDestino, Double monto) {
 
 		Cuenta origen = cuentaDao.read(idOrigen);
 		Cuenta destino = cuentaDao.read(idDestino);
@@ -155,12 +168,12 @@ public class Servicio {
 		}
 
 		
-		if (origen.getFechaDeCierre() != null) {			
+		if (!origen.cuentaAbierta()) {			
 			System.out.println("CUENTA ORIGEN CERRADA...");
 			throw new IllegalArgumentException("CUENTA ORIGEN CERRADA");
 		}
 		
-		if (destino.getFechaDeCierre() != null) {			
+		if (!destino.cuentaAbierta()) {			
 			System.out.println("CUENTA Destino CERRADA...");
 			throw new IllegalArgumentException("CUENTA Destino CERRADA");
 		}
@@ -189,7 +202,7 @@ public class Servicio {
 	}
 
 	@Transactional
-	public void vender(Long idCliente, Long idOrigen, Long idDestino, Float monto) {
+	public void vender(Long idCliente, Long idOrigen, Long idDestino, Double monto) {
 
 		Cliente cliente = clienteDao.read(idCliente);
 		Cuenta origen = cuentaDao.read(idOrigen);
@@ -219,12 +232,12 @@ public class Servicio {
 			throw new IllegalArgumentException("Saldo insuficiente");
 		}
 
-		if (origen.getFechaDeCierre() != null) {			
+		if (!origen.cuentaAbierta()) {			
 			System.out.println("CUENTA ORIGEN CERRADA...");
 			throw new IllegalArgumentException("CUENTA ORIGEN CERRADA");
 		}
 		
-		if (destino.getFechaDeCierre() != null) {			
+		if (!destino.cuentaAbierta()) {			
 			System.out.println("CUENTA Destino CERRADA...");
 			throw new IllegalArgumentException("CUENTA Destino CERRADA");
 		}
@@ -247,8 +260,8 @@ public class Servicio {
 		System.out.println(resultadoCambio.getTasa());
 		System.out.println("HICE EL CAMBIO !!!!!!!");
 		
-		Venta vtadbt = new Venta(LocalDateTime.now(), monto, "Debito Venta de moneda extranjera", resultadoCambio.getTasa(), 0F);
-		Venta vtacrdt = new Venta(LocalDateTime.now(), monto*resultadoCambio.getTasa(), "Credito Venta de moneda extranjera", resultadoCambio.getTasa(), 0F);
+		Venta vtadbt = new Venta(LocalDateTime.now(), monto, "Debito Venta de moneda extranjera", resultadoCambio.getTasa(), 0D);
+		Venta vtacrdt = new Venta(LocalDateTime.now(), monto*resultadoCambio.getTasa(), "Credito Venta de moneda extranjera", resultadoCambio.getTasa(), 0D);
 		
 		System.out.println("GENERE LOS MOVIMIENTOS !!!!!!!");
 		

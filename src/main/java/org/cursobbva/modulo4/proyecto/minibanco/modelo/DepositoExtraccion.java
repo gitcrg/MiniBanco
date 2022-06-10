@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  * @author Cristian Gutierrez
@@ -13,27 +16,17 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Data
+@NoArgsConstructor
 public abstract class DepositoExtraccion extends Movimiento{
 	
 	@NotNull(message = "{movimiento.cajaCajero}")
 	@Column(updatable=false)
 	private String cajaCajero;
 
-	public DepositoExtraccion(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion,
-			String cajaCajero) {
-		super(fechayHoraDeRealizacion, monto, descripcion);
+	public DepositoExtraccion(LocalDateTime fechayHora, Double monto, String descripcion, String cajaCajero) {
+		super(fechayHora, monto, descripcion);
 		this.cajaCajero = cajaCajero;
 	}
-	public DepositoExtraccion() {}
-
-	public String getCajaCajero() {
-		return cajaCajero;
-	}
-
-	public void setCajaCajero(String cajaCajero) {
-		this.cajaCajero = cajaCajero;
-	}
-	
-
 	
 }

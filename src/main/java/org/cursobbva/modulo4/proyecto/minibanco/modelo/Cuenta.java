@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +41,13 @@ import lombok.experimental.SuperBuilder;
  *
  */
 
-@Entity
+@Entity(name = "CUENTAS")
+@Inheritance(strategy = InheritanceType.JOINED)
+@NamedQueries({
+@NamedQuery(name="CUENTAS.buscarTodas", query="select cta from CUENTAS cta"),
+})
+@Data
+@NoArgsConstructor
 public abstract class Cuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,25 +58,24 @@ public abstract class Cuenta {
 	private LocalDate fechaDeCreacion;
 	@PositiveOrZero(message = "{cuenta.saldoInicial}")
 	@Column(updatable=false)
-	private float saldoInicial;
-	@PositiveOrZero(message = "{cuenta.saldoActual}")
-	private float saldoActual;
+	private Double saldoInicial;
+	@NotNull(message = "{cuenta.saldoActual}")
+	private Double saldoActual;
 	@PositiveOrZero(message = "{cuenta.descubiertoAcordado}")
-	private float descubiertoAcordado;
+	private Double descubiertoAcordado;
 	private LocalDate fechaDeCierre;
 	@ManyToOne
 	@JoinColumn(name="titular_Id", updatable=false)
 	@NotNull(message = "{cuenta.titular}")
+	@JsonIgnore
 	private Cliente titular;
 	@ManyToMany
+	@JsonIgnore
 	private Set<Cliente> cotitulares = new HashSet<Cliente>();
-	@OneToMany(fetch = FetchType.EAGER)//(mappedBy = "cuenta")
+	@OneToMany(mappedBy = "cuenta")
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-
-	//CONSTRUCTORES
-	public Cuenta(LocalDate fechaDeCreacion, float saldoInicial, float saldoActual, float descubiertoAcordado,
-			LocalDate fechaDeCierre, Cliente titular) {
+	public Cuenta(LocalDate fechaDeCreacion, Double saldoInicial, Double saldoActual, Double descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
 		super();
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.saldoInicial = saldoInicial;
@@ -71,83 +83,42 @@ public abstract class Cuenta {
 		this.descubiertoAcordado = descubiertoAcordado;
 		this.fechaDeCierre = fechaDeCierre;
 		this.titular = titular;
-	}
-	public Cuenta() {}
-	
-	//GETTERS Y SETTERS	
-	public Long getNumero() {
-		return numero;
-	}
-	public void setNumero(Long numero) {
-		this.numero = numero;
-	}
-	public LocalDate getFechaDeCreacion() {
-		return fechaDeCreacion;
-	}
-	public void setFechaDeCreacion(LocalDate fechaDeCreacion) {
-		this.fechaDeCreacion = fechaDeCreacion;
-	}
-	public float getSaldoInicial() {
-		return saldoInicial;
-	}
-	public void setSaldoInicial(float saldoInicial) {
-		this.saldoInicial = saldoInicial;
-	}
-	public float getSaldoActual() {
-		return saldoActual;
-	}
-	public void setSaldoActual(float saldoActual) {
-		this.saldoActual = saldoActual;
-	}
-	public float getDescubiertoAcordado() {
-		return descubiertoAcordado;
-	}
-	public void setDescubiertoAcordado(float descubiertoAcordado) {
-		this.descubiertoAcordado = descubiertoAcordado;
-	}
-	public LocalDate getFechaDeCierre() {
-		return fechaDeCierre;
-	}
-	public void setFechaDeCierre(LocalDate fechaDeCierre) {
-		this.fechaDeCierre = fechaDeCierre;
-	}
-	public Cliente getTitular() {
-		return titular;
-	}
-	public void setTitular(Cliente titular) {
-		this.titular = titular;
-	}
-	public Set<Cliente> getCotitulares() {
-		return cotitulares;
-	}
-	public void setCotitulares(Set<Cliente> cotitulares) {
-		this.cotitulares = cotitulares;
-	}
-	public List<Movimiento> getMovimientos() {
-		return movimientos;
-	}
-	public void setMovimientos(List<Movimiento> movimientos) {
-		this.movimientos = movimientos;
+		if (titular != null)  titular.agregarCuentaTitular(this);
 	}
 
-	
-	//AGREGAR
 	public void agregarCotitular(Cliente cotitular) {
-		cotitulares.add(cotitular);
+		if (cotitulares.contains(cotitular)) {
+			throw new IllegalArgumentException("Cliente ya es cotitular de la cuenta");
+		} else {
+			cotitulares.add(cotitular);		
+		}
+	
+	}
+	
+	public void quitarCotitular(Cliente cotitular) {
+		if (!cotitulares.contains(cotitular)) {
+			throw new IllegalArgumentException("Cliente no es cotitular de la cuenta");
+		} else {
+			cotitulares.remove(cotitular);		
+		}
+	
 	}
 	
 	public void agregarMovimiento(Movimiento movimiento) {
 		movimientos.add(movimiento);
+		movimiento.setCuenta(this);
 	}
 
 	public void agregarMovimiento(TransferenciaCredito trfcrdt) {
 		saldoActual = saldoActual + trfcrdt.getMonto();
 		movimientos.add(trfcrdt);
+		trfcrdt.setCuenta(this);
 	}
 	
 	public void agregarMovimiento(TransferenciaDebito trfdbt) {
 		saldoActual = saldoActual - trfdbt.getMonto();
 		movimientos.add(trfdbt);
+		trfdbt.setCuenta(this);
 	}
 
 	public abstract void agregarMovimiento(Venta vta);
@@ -155,5 +126,11 @@ public abstract class Cuenta {
 	public TipoMoneda getMoneda() {
 		return null;
 	}
+	
+	
+	public boolean cuentaAbierta() {
+		return fechaDeCierre == null;
+	}
+	
 	
 }

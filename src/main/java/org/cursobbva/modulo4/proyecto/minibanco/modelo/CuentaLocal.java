@@ -4,29 +4,28 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  * @author Cristian Gutierrez
  *
  */
 
-@Entity
+@Entity(name = "CUENTAS_LOCALES")
+@Data
+@NoArgsConstructor
 public class CuentaLocal extends Cuenta{
 
-	public CuentaLocal() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public CuentaLocal(LocalDate fechaDeCreacion, float saldoInicial, float saldoActual, float descubiertoAcordado,
-			LocalDate fechaDeCierre, Cliente titular) {
+	public CuentaLocal(LocalDate fechaDeCreacion, Double saldoInicial, Double saldoActual, Double descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
 		super(fechaDeCreacion, saldoInicial, saldoActual, descubiertoAcordado, fechaDeCierre, titular);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void agregarMovimiento(Venta vta) {
 		setSaldoActual(getSaldoActual() + (vta.getMonto()*vta.getCotizacion()));
 		this.getMovimientos().add(vta);
+		vta.setCuenta(this);
 	}
 
 }

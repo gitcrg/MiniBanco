@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.daos;
+package org.cursobbva.modulo4.proyecto.minibanco.dao;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,39 +23,32 @@ public class ClienteDAO{
 	public ClienteDAO() {}
 
 	public Cliente create(Cliente obj) {
-		// TODO Auto-generated method stub
 		em.persist(obj);
 		return obj;
 	}
 
 	public Cliente read(Long id) {
-		// TODO Auto-generated method stub
 		return em.find(Cliente.class, id);
 	}
 
 	public Cliente update(Cliente t) {
-		// TODO Auto-generated method stub
 		return (Cliente) em.merge(t);
 		
 	}
 
 	public void delete(Cliente t) {
-		// TODO Auto-generated method stub
 		t = em.merge(t);
 		em.remove(t);
 	}
 
 	@SuppressWarnings("unchecked")
 	public Collection<Cliente> readAll() {
-		// TODO Auto-generated method stub
-		return (List<Cliente>) em.createNamedQuery("Cliente.clientesAll").getResultList();
+		return (List<Cliente>) em.createNamedQuery("CLIENTES.buscarTodos").getResultList();
 	}
-
 
 	@SuppressWarnings("unchecked")
 	public List<Cliente> getClientePorNombre(String nombre) {
-		return (List<Cliente>) em.createNamedQuery("Cliente.clientesByNombre").setParameter("nombre", nombre).getResultList();
+		return (List<Cliente>) em.createNamedQuery("CLIENTES.buscarPorNombre").setParameter("nombre", nombre).getResultList();
 	}
-
 	
 }

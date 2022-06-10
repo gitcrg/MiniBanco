@@ -33,11 +33,13 @@
 		</property>
 		<property name="jpaProperties">
 			<props>
- 				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop> 		
+ 				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop>
+<!--  			<prop key="javax.persistence.schema-generation.scripts.action">drop-and-create</prop>
+      			<prop key="javax.persistence.schema-generation.scripts.create-target">src/main/resources/db/create.ddl</prop>
+      			<prop key="javax.persistence.schema-generation.scripts.drop-target">src/main/resources/db/drop.ddl</prop> -->
 			</props>
 		</property>
 	</bean>
-
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -50,6 +52,6 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan
-		base-package="org.cursobbva.modulo4.proyecto.minibanco.daos,org.cursobbva.modulo4.proyecto.minibanco.uso,org.cursobbva.modulo4.proyecto.minibanco.servicios,org.cursobbva.modulo4.minibanco.implem">
+		base-package="org.cursobbva.modulo4.proyecto.minibanco.dao,org.cursobbva.modulo4.proyecto.minibanco.servicio,org.cursobbva.modulo4.proyecto.minibanco.implem">
 	</context:component-scan>
 </beans>

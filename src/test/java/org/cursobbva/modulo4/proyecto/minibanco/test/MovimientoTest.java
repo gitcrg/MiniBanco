@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 
  * @author Cristian Gutierrez
- *
+ *TODO:Revisar por que algunas Validaciones se duplican
  */
 
 public class MovimientoTest {
@@ -51,14 +51,14 @@ public class MovimientoTest {
 	@BeforeEach
 	public void crear() {
 		dir = new Direccion("calle1", "numero1", "departamento1", "piso1", "ciudad1", "codigoPostal1", "provincia1");
-		cte = new Cliente("nombre", "apellido", "telefono", "email", dir);
-		cta = new CuentaLocal(LocalDate.now(), 0F, 0F, 1000F, null, cte );
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000D, null, cte );
 	}
 
 	@Test
 	public void testContructorDepositoOk() {
-		dep = new Deposito(LocalDateTime.now(), 2000F, "deposito 1", "cajaCajero 1");
-		float monto = 2000F;
+		dep = new Deposito(LocalDateTime.now(), 2000D, "deposito 1", "cajaCajero 1");
+		Double monto = 2000D;
 		String descripcion = "deposito 1";
 		String cajero = "cajaCajero 1";
 		assertEquals(monto, dep.getMonto(),0);
@@ -68,8 +68,8 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorExtraccionOk() {
-		ext = new Extraccion(LocalDateTime.now(), 500F, "extraccion1", "caja2");
-		float monto = 500F;
+		ext = new Extraccion(LocalDateTime.now(), 500D, "extraccion1", "caja2");
+		Double monto = 500D;
 		String descripcion = "extraccion1";
 		String cajero = "caja2";
 		assertEquals(monto, ext.getMonto(),0);
@@ -79,11 +79,11 @@ public class MovimientoTest {
 
 	@Test
 	public void testContructorCompraOk() {
-		cmp = new Compra(LocalDateTime.now(), 500F, "compra-dolares", 205F, 5F);
-		float monto = 500F;
+		cmp = new Compra(LocalDateTime.now(), 500D, "compra-dolares", 205D, 5D);
+		Double monto = 500D;
 		String descripcion = "compra-dolares";
-		Float cotizacion = 205F;
-		Float comision = 5F;
+		Double cotizacion = 205D;
+		Double comision = 5D;
 		assertEquals(monto, cmp.getMonto(),0);
 		assertEquals(descripcion, cmp.getDescripcion());
 		assertEquals(cotizacion, cmp.getCotizacion(),0);
@@ -92,11 +92,11 @@ public class MovimientoTest {
 
 	@Test
 	public void testContructorVentaOk() {
-		vnt = new Venta(LocalDateTime.now(), 100F, "venta-dolares", 195F, 5F);
-		float monto = 100F;
+		vnt = new Venta(LocalDateTime.now(), 100D, "venta-dolares", 195D, 5D);
+		Double monto = 100D;
 		String descripcion = "venta-dolares";
-		Float cotizacion = 195F;
-		Float comision = 5F;
+		Double cotizacion = 195D;
+		Double comision = 5D;
 		assertEquals(monto, vnt.getMonto(),0);
 		assertEquals(descripcion, vnt.getDescripcion());
 		assertEquals(cotizacion, vnt.getCotizacion(),0);
@@ -105,8 +105,8 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorCreditoOk() {
-		cred = new TransferenciaCredito(LocalDateTime.now(), 35000F, "credito-tran", cta);
-		float monto = 35000F;
+		cred = new TransferenciaCredito(LocalDateTime.now(), 35000D, "credito-tran", cta);
+		Double monto = 35000D;
 		String descripcion = "credito-tran";
 		assertEquals(monto, cred.getMonto(),0);
 		assertEquals(descripcion, cred.getDescripcion());
@@ -115,8 +115,8 @@ public class MovimientoTest {
 	
 	@Test
 	public void testContructorDebitoOk() {
-		debi = new TransferenciaDebito(LocalDateTime.now(), 5000F, "debito-tran", cta);
-		float monto = 5000F;
+		debi = new TransferenciaDebito(LocalDateTime.now(), 5000D, "debito-tran", cta);
+		Double monto = 5000D;
 		String descripcion = "debito-tran";
 		assertEquals(monto, debi.getMonto(),0);
 		assertEquals(descripcion, debi.getDescripcion());
@@ -125,31 +125,31 @@ public class MovimientoTest {
 	
 	@Test
 	public void testValidacionCamposObligatoriosTransDebi() {
-		LocalDateTime fechaHoraOperacion = null;
-		float monto = 0F;
+		LocalDateTime fechaHora = null;
+		Double monto = 0D;
 		String descripcion = "";
 		Cuenta cta = null;
 		
-		debi = new TransferenciaDebito(fechaHoraOperacion, monto, descripcion, cta);
+		debi = new TransferenciaDebito(fechaHora, monto, descripcion, cta);
 
 		Set<ConstraintViolation<TransferenciaDebito>> violations = validator.validate(debi);
 		assertTrue(!violations.isEmpty());
-		assertEquals(4,violations.size());
+		assertEquals(6,violations.size());
 
 	}
 
 	@Test
 	public void testValidacionCamposObligatoriosTransCred() {
-		LocalDateTime fechaHoraOperacion = null;
-		float monto = 0F;
+		LocalDateTime fechaHora = null;
+		Double monto = 0D;
 		String descripcion = "";
 		Cuenta cta = null;
 		
-		cred = new TransferenciaCredito(fechaHoraOperacion, monto, descripcion, cta);
+		cred = new TransferenciaCredito(fechaHora, monto, descripcion, cta);
 
 		Set<ConstraintViolation<TransferenciaCredito>> violations = validator.validate(cred);
 		assertTrue(!violations.isEmpty());
-		assertEquals(4,violations.size());
+		assertEquals(6,violations.size());
 
 	}
 	

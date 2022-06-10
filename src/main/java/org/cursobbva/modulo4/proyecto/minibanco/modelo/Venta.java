@@ -3,6 +3,12 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -11,14 +17,12 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Venta extends CompraVenta{
 
-	public Venta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, float cotizacion,
-			float comision) {
+	public Venta(LocalDateTime fechayHoraDeRealizacion, Double monto, String descripcion, Double cotizacion, Double comision) {
 		super(fechayHoraDeRealizacion, monto, descripcion, cotizacion, comision);
-		// TODO Auto-generated constructor stub
 	}
-	public Venta() {}
-	
 
 }

@@ -3,6 +3,10 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -11,17 +15,12 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Transferencia extends Movimiento{
 
-	public Transferencia() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Transferencia(LocalDateTime fechayHora, Double monto, String descripcion) {
+		super(fechayHora, monto, descripcion);
 	}
-
-	public Transferencia(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion) {
-		super(fechayHoraDeRealizacion, monto, descripcion);
-		// TODO Auto-generated constructor stub
-	}
-
 	
 }

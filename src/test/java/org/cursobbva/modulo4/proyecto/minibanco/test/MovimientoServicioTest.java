@@ -1,0 +1,204 @@
+package org.cursobbva.modulo4.proyecto.minibanco.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.cursobbva.modulo4.proyecto.minibanco.dao.ClienteDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.dao.CuentaDAO;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
+import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCuenta;
+import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioMovimiento;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:/spring/contexto-jpa-test.xml")
+@Transactional
+class MovimientoServicioTest {
+	@Autowired
+	private ServicioMovimiento servicioMovimiento;
+	
+	@Autowired
+	private CuentaDAO ctaDao;
+	
+	@BeforeEach
+	public void inicioCadaTest() {
+
+	}
+
+	@Test
+	public void testTransferirMontoCero() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(1L, 1L, 0D);});
+		assertEquals("Monto de transferencia debe ser mayor a CERO", excep.getMessage());
+	}
+
+	@Test
+	public void testTransferirCuentaOrigenInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(100L, 1L, 123D);});
+		assertEquals("Cuenta Origen inexistente", excep.getMessage());
+	}
+
+	@Test
+	public void testTransferirCuentaDestinoInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(1L, 100L, 123D);});
+		assertEquals("Cuenta Destino inexistente", excep.getMessage());
+	}
+
+	@Test
+	public void testTransferirCuentaOrigenCerrada() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(2L, 1L, 123D);});
+		assertEquals("Cuenta origen cerrada", excep.getMessage());
+	}
+
+	@Test
+	public void testTransferirCuentaDestinoCerrada() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(1L, 2L, 99D);});
+		assertEquals("Cuenta destino cerrada", excep.getMessage());
+	}
+
+
+	@Test
+	public void testTransferirSaldoInsuficiente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.transferir(1L, 2L, 9999999D);});
+		assertEquals("Saldo insuficiente", excep.getMessage());
+	}
+
+
+	@Test
+	public void transferirOK() {
+		Double monto = 150D;
+		
+		Double saldoOrigenAntes;
+		Double saldoOrigenDespues;
+		Double saldoDestinoAntes;
+		Double saldoDestinoDespues;
+		
+		saldoOrigenAntes = ctaDao.read(1L).getSaldoActual();
+		saldoDestinoAntes = ctaDao.read(3L).getSaldoActual();
+		assertEquals(0,ctaDao.read(1L).getMovimientos().size());
+		assertEquals(0,ctaDao.read(3L).getMovimientos().size());
+
+		servicioMovimiento.transferir(1L, 3L, monto);
+
+		assertEquals(1,ctaDao.read(1L).getMovimientos().size());
+		assertEquals(1,ctaDao.read(3L).getMovimientos().size());
+		
+		saldoOrigenDespues = ctaDao.read(1L).getSaldoActual();
+		saldoDestinoDespues = ctaDao.read(3L).getSaldoActual();
+		
+		assertTrue(saldoOrigenAntes == (saldoOrigenDespues + monto));
+		assertTrue(saldoDestinoAntes == (saldoDestinoDespues - monto));
+		
+	}
+	
+	
+	
+	
+	
+	@Test
+	public void testVentaMontoCero() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 2L, 3L, 0.0);});
+		assertEquals("Monto de venta debe ser mayor a CERO", excep.getMessage());
+	}
+
+	@Test
+	public void testClienteInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(10L, 2L, 3L, 100.0);});
+		assertEquals("Cliente inexistente", excep.getMessage());
+	}
+
+		@Test
+	public void testVentaCuentaOrigenInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 10L, 3L, 100.0);});
+		assertEquals("Cuenta Origen inexistente", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaCuentaDestinoInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 2L, 30L, 100.0);});
+		assertEquals("Cuenta Destino inexistente", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaCuentasDelCliente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 7L, 3L, 1000.0);});
+		assertEquals("Las cuentas deben ser del cliente", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaSaldoInsuficiente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 5L, 1L, 99999.0);});
+		assertEquals("Saldo insuficiente", excep.getMessage());
+	}
+
+		@Test
+	public void testVentaCuentaOrigenCerrada() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(2L, 6L, 3L, 100.0);});
+		assertEquals("Cuenta origen cerrada", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaCuentaDestinoCerrada() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(2L, 5L, 2L, 100.0);});
+		assertEquals("Cuenta destino cerrada", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaCuentaOrigenExtranjera() {
+	IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 1L, 5L, 100.0);});
+	assertEquals("Cuenta origen debe ser Extranjera", excep.getMessage());
+	}
+
+	@Test
+	public void testVentaCuentaDestinoLocal() {
+	IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioMovimiento.vender(1L, 5L, 5L, 1000.0);});
+	assertEquals("Cuenta destino debe ser Local", excep.getMessage());
+	}
+
+	@Test
+	public void ventaOK() {
+		Double monto = 15.0;
+		
+		Double saldoOrigenAntes;
+		Double saldoOrigenDespues;
+		Double saldoDestinoAntes;
+		Double saldoDestinoDespues;
+		
+		saldoOrigenAntes = ctaDao.read(5L).getSaldoActual();
+		saldoDestinoAntes = ctaDao.read(5L).getSaldoActual();
+
+		assertEquals(0,ctaDao.read(5L).getMovimientos().size());
+		assertEquals(0,ctaDao.read(1L).getMovimientos().size());
+
+		servicioMovimiento.vender(1L, 5L, 1L, monto);
+
+		assertEquals(1,ctaDao.read(5L).getMovimientos().size());
+		assertEquals(1,ctaDao.read(1L).getMovimientos().size());
+		
+		saldoOrigenDespues = ctaDao.read(5L).getSaldoActual(); 
+		saldoDestinoDespues = ctaDao.read(1L).getSaldoActual();
+		
+		assertTrue(saldoOrigenAntes == (saldoOrigenDespues + monto));
+//		assertTrue(saldoDestinoAntes == (saldoDestinoDespues - monto));
+		
+	}
+
+	
+}

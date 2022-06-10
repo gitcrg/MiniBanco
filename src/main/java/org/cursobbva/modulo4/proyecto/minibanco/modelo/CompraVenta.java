@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -14,34 +18,18 @@ import javax.validation.constraints.Positive;
  */
 
 @Entity
+@Data
+@NoArgsConstructor
 public abstract class CompraVenta extends Movimiento{
 	@Positive(message = "{movimiento.cotizacion}")
 	@Column(updatable=false)
-	private float cotizacion;
+	private Double cotizacion;
 	@Column(updatable=false)
-	private float comision;
+	private Double comision;
 
-	public CompraVenta(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion, float cotizacion,
-			float comision) {
-		super(fechayHoraDeRealizacion, monto, descripcion);
+	public CompraVenta(LocalDateTime fechayHora, Double monto, String descripcion, Double cotizacion, Double comision) {
+		super(fechayHora, monto, descripcion);
 		this.cotizacion = cotizacion;
-		this.comision = comision;
-	}
-	public CompraVenta() {}
-
-	public float getCotizacion() {
-		return cotizacion;
-	}
-
-	public void setCotizacion(float cotizacion) {
-		this.cotizacion = cotizacion;
-	}
-
-	public float getComision() {
-		return comision;
-	}
-
-	public void setComision(float comision) {
 		this.comision = comision;
 	}
 

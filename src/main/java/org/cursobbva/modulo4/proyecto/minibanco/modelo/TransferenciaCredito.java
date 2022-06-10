@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  * @author Cristian Gutierrez
@@ -14,24 +21,17 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Data
+@NoArgsConstructor
 public class TransferenciaCredito extends Transferencia{
 	@ManyToOne
 	@NotNull(message = "{movimiento.cuentaOrigen}")
+	@JsonIgnore
 	private Cuenta cuentaOrigen;
 
-	public TransferenciaCredito(LocalDateTime fechayHoraDeRealizacion, float monto, String descripcion,	Cuenta cuentaOrigen) {
-		super(fechayHoraDeRealizacion, monto, descripcion);
+	public TransferenciaCredito(LocalDateTime fechayHora, Double monto, String descripcion,	Cuenta cuentaOrigen) {
+		super(fechayHora, monto, descripcion);
 		this.cuentaOrigen = cuentaOrigen;
 	}
 
-	public TransferenciaCredito() {}
-
-	public Cuenta getCuentaOrigen() {
-		return cuentaOrigen;
-	}
-
-	public void setCuentaOrigen(Cuenta cuentaOrigen) {
-		this.cuentaOrigen = cuentaOrigen;
-	}
-	
 }
