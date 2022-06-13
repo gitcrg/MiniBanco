@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "538b9296-9b80-4d71-911d-f493bfbaa736",
+		"name": "ProyectoMiniBanco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6944018"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/clientes/modificarDireccion",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCliente\":\"1\",\r\n    \"nuevaDirecc\":{\r\n        \"calle\":\"nuevaCalle\",\r\n        \"numero\":\"nuevonumero\",\r\n        \"departamento\":\"nuevodto\",\r\n        \"piso\":\"piso\",\r\n        \"ciudad\":\"nuevaciudad\",\r\n        \"codigoPostal\":\"nuevoCP\",\r\n        \"provincia\":\"nuevaprovincia\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/modificarDireccion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"modificarDireccion"
+					],
+					"query": [
+						{
+							"key": "\"muestra\"",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuentas/altaCotitular",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCuenta\":\"1\",\r\n    \"idCliente\":\"4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuentas/agregarCotitular",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuentas",
+						"agregarCotitular"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuentas/transferir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCtaOrigen\":\"3\",\r\n    \"idCtaDestino\":\"4\",\r\n    \"monto\":\"10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuentas/transferir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuentas",
+						"transferir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuentas/alta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"saldoInicial\":\"1234\",\r\n    \"descubierto\":\"0\",\r\n    \"idCliente\":\"4\",\r\n    \"moneda\":\"USD\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuentas/alta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuentas",
+						"alta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/clientes/buscarPorId/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/buscarPorId/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"buscarPorId",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
