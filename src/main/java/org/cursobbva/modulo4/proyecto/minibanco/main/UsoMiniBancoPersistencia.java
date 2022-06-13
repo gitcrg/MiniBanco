@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +17,11 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Extraccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
-
+/**
+ * Main para uso de persistencia EntityManager y Trnsacciones
+ * @author Cristian Gutierrez
+ *
+ */
 public class UsoMiniBancoPersistencia {
 
 	public static void main(String[] args) {
@@ -31,21 +35,20 @@ public class UsoMiniBancoPersistencia {
 		Cliente cte3 = new Cliente("nombrecte3", "apellido3", "telefono3", "email3@email.com", dir3);
 				
 		CuentaLocal ctaLoc1 = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000d, LocalDate.now(), cte1);
-		ctaLoc1.agregarCotitular(cte1);//cte1.agregarCuentaCoTitular(ctaLoc1);
-		ctaLoc1.agregarCotitular(cte2);//cte2.agregarCuentaCoTitular(ctaLoc1);
-		ctaLoc1.agregarCotitular(cte3);//cte3.agregarCuentaCoTitular(ctaLoc1);
+		ctaLoc1.agregarCotitular(cte1);
+		ctaLoc1.agregarCotitular(cte2);
+		ctaLoc1.agregarCotitular(cte3);
 		
 		TransferenciaCredito tranCred1 = new TransferenciaCredito(LocalDateTime.now(), 10D, "Credito", ctaLoc1);
 		Compra cmpr1 = new Compra(LocalDateTime.now(), 50D, "compra dolar", 200D, 0D);
 		Extraccion extra1 = new Extraccion(LocalDateTime.now(),300D, "extraccion", "cajero1");
 		
-		ctaLoc1.agregarMovimiento(tranCred1);//tranCred1.setCuenta(ctaLoc1);
-		ctaLoc1.agregarMovimiento(extra1);//extra1.setCuenta(ctaLoc1);
-		ctaLoc1.agregarMovimiento(cmpr1);//cmpr1.setCuenta(ctaLoc1);
+		ctaLoc1.agregarMovimiento(tranCred1);
+		ctaLoc1.agregarMovimiento(extra1);
+		ctaLoc1.agregarMovimiento(cmpr1);
 	
 		Cuenta ctaext3 = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 1000D, LocalDate.now(), cte1, TipoMoneda.USD);
 		Cuenta ctaext4 = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 1000D, LocalDate.now(), cte1, TipoMoneda.USD);
-		
 		
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("minibancoPU");
@@ -66,8 +69,8 @@ public class UsoMiniBancoPersistencia {
 		em.persist(ctaext4);
 		
 		em.flush();
-		ctaLoc1.setSaldoInicial(500D);
-		ctaLoc1.setSaldoActual(123456D);;
+		ctaLoc1.setSaldoInicial(500.0);//NO IMPACTA-OK
+		ctaLoc1.setSaldoActual(123456.0);;
 		em.persist(ctaLoc1);
 		
 		tx.commit();

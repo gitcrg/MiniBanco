@@ -1,14 +1,12 @@
 package org.cursobbva.modulo4.proyecto.minibanco.implem;
 
-
-
-
 import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
-import org.cursobbva.modulo4.proyecto.minibanco.interf.ServicioCambio;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 
 public class ResultadoCambioImplem implements ResultadoCambio{
 	
@@ -31,16 +29,17 @@ public class ResultadoCambioImplem implements ResultadoCambio{
 				
 		switch(de) {
 		case USD: 
-			return 200.0D;
+			return 200.0;
 		case EUR: 
-			return 300.0D;
+			return 300.0;
+		default:
+			break;
 		}
 		return null;
 	}
 
 	@Override
 	public Double getResultado() {
-		// TODO Auto-generated method stub
 		return monto * getTasa();
 
 	}

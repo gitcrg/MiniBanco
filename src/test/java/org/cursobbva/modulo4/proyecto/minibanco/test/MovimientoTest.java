@@ -26,7 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * 
+ * TEST para COnstructores y Validaciones de atributos de Movimientos
  * @author Cristian Gutierrez
  *TODO:Revisar por que algunas Validaciones se duplican
  */

@@ -3,9 +3,9 @@ package org.cursobbva.modulo4.proyecto.minibanco.modelo;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class Transferencia extends Movimiento{
 
 	public Transferencia(LocalDateTime fechayHora, Double monto, String descripcion) {

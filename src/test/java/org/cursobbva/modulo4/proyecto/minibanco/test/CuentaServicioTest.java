@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 
+ * TEST de Agregar Cotitular en una Cuenta
  * @author Cristian Gutierrez
  *
  */
@@ -39,39 +39,46 @@ class CuentaServicioTest {
 	}
 
 	@Test
-	public void testClienteInexistente() {
+	public void testCuentaInexistente() {
+		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.leerCuentaById(0L);});
+		assertEquals("Cuenta Inexistente", excep.getMessage());
+	}
+
+	
+	@Test
+	public void testAgregarCotitularClienteInexistente() {
 		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.agregarCotitular(50L, 1L);});
 		assertEquals("Cliente Inexistente", excep.getMessage());
 	}
 
 	@Test
-	public void testCuentaInexistente() {
+	public void testAgregarCotitularCuentaInexistente() {
 		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.agregarCotitular(1L, 50L);});
 		assertEquals("Cuenta Inexistente", excep.getMessage());
 	}
 
 	@Test
-	public void testCuentaCerrada() {
+	public void testAgregarCotitularCuentaCerrada() {
 		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.agregarCotitular(1L, 2L);});
 		assertEquals("Cuenta cerrada", excep.getMessage());
 	}
 
 
 	@Test
-	public void testClienteEsTitular() {
+	public void testAgregarCotitularClienteEsTitular() {
 		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.agregarCotitular(1L, 1L);});
 		assertEquals("El cliente ya es titular de la cuenta", excep.getMessage());
 	}
 
 
 	@Test
-	public void testClienteEsCoTitular() {
+	public void testAgregarCotitularClienteEsCoTitular() {
 		IllegalArgumentException excep = assertThrows(IllegalArgumentException.class, () -> {servicioCuenta.agregarCotitular(1L, 4L);});
 		assertEquals("El cliente ya es cotitular de la cuenta", excep.getMessage());
 	}
 
 	@Test
-	public void agregarCotitulaOK() {
+	public void testAagregarCotitulaOK() {
 		Cuenta cta = servicioCuenta.agregarCotitular(4L, 1L);
 		assertEquals(1,cta.getCotitulares().size(),0);
 		

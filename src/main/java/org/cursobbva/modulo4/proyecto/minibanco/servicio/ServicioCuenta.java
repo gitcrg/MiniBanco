@@ -1,37 +1,25 @@
 package org.cursobbva.modulo4.proyecto.minibanco.servicio;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.validation.ConstraintViolation;
 
 import org.cursobbva.modulo4.proyecto.minibanco.dao.ClienteDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.dao.CuentaDAO;
-import org.cursobbva.modulo4.proyecto.minibanco.dao.MovimientoDAO;
-import org.cursobbva.modulo4.proyecto.minibanco.implem.ResultadoCambioImplem;
-import org.cursobbva.modulo4.proyecto.minibanco.implem.ServicioCambioImplem;
-import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
-import org.cursobbva.modulo4.proyecto.minibanco.uso.UsoMinibancoPersistenciaDAOSpring;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 
 @Component
 public class ServicioCuenta {
@@ -51,16 +39,21 @@ public class ServicioCuenta {
 		}
 		Cuenta cuenta;
 		if (moneda == null) {
-			cuenta = new CuentaLocal(LocalDate.now(), saldoInicial, 0D, 0D, null, titular);
+			cuenta = new CuentaLocal(LocalDate.now(), saldoInicial, 0.0, 0.0, null, titular);
 		} else {
-			cuenta = new CuentaExtranjera(LocalDate.now(), saldoInicial, 0D, 0D, null, titular, moneda);
+			cuenta = new CuentaExtranjera(LocalDate.now(), saldoInicial, 0.0, 0.0, null, titular, moneda);
 		}
 		return cuentaDao.create(cuenta);
 	}
 
 	@Transactional
 	public Cuenta leerCuentaById(Long idCuenta) {
-		return cuentaDao.read(idCuenta);
+		Cuenta cta = cuentaDao.read(idCuenta); 
+		if (cta != null) {return cta;}
+		else {
+			throw new IllegalArgumentException("Cuenta Inexistente");
+		}
+		
 	}
 	
 	@Transactional
@@ -96,7 +89,6 @@ public class ServicioCuenta {
 		}
 		
 		cta.agregarCotitular(cte);
-//		cte.agregarCuentaCoTitular(cta);
 		return cta;
 	}
 	

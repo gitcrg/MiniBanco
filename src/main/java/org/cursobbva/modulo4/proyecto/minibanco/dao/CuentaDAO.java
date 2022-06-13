@@ -6,11 +6,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
 import org.springframework.stereotype.Repository;
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 
 @Repository("cuentaDAO")
 public class CuentaDAO{
@@ -41,6 +45,7 @@ public class CuentaDAO{
 		em.remove(t);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Collection<Cuenta> readAll() {
 		return (List<Cuenta>) em.createNamedQuery("CUENTAS.buscarTodas").getResultList();
 	}

@@ -1,16 +1,18 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-import org.cursobbva.modulo4.proyecto.minibanco.servicio.Servicio;
 import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCliente;
 import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioCuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.servicio.ServicioMovimiento;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
+/**
+ * Main para uso de Servicios
+ * @author Cristian Gutierrez
+ *
+ */
 public class UsoMiniBancoServicios {
 
 	public static void main(String[] args) {

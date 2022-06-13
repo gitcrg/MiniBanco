@@ -18,7 +18,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
- * 
+ * TEST para DAO de Cliente
  * @author Cristian Gutierrez
  *
  */

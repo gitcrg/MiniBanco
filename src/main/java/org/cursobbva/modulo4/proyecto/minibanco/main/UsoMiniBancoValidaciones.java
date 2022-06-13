@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import java.util.Set;
 
@@ -14,7 +14,11 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Movimiento;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
-
+/**
+ * Main para Validaciones
+ * @author Cristian Gutierrez
+ *
+ */
 public class UsoMiniBancoValidaciones {
 
 	public static void main(String[] args) {

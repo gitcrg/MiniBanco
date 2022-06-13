@@ -27,7 +27,7 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 /**
- * 
+ * TEST de Constructor, Metodos y Validacion de atributos 
  * @author Cristian Gutierrez
  *TODO:Revisar por que algunas Validaciones se duplican
  */
@@ -48,12 +48,12 @@ public class CuentaTest {
 
 	@Test
 	public void testContructorCuentaLocalOk() {
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 0D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 0.0, null, cte);
 
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D;
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0;
 		LocalDate fechaCierre = null;
 
 		assertEquals(fechacreacion, cta.getFechaDeCreacion());
@@ -66,12 +66,11 @@ public class CuentaTest {
 	
 	@Test
 	public void testContructorCuentaExtranjeraOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D
-				;
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0;
 		LocalDate fechaCierre = null;
 
 		assertEquals(fechacreacion, cta.getFechaDeCreacion());
@@ -84,12 +83,12 @@ public class CuentaTest {
 	
 	@Test
 	public void testCuentaLocalCambioSaldoOk() {
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 0D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 0.0, null, cte);
 
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D;
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0;
 		LocalDate fechaCierre = null;
 
 		assertEquals(fechacreacion, cta.getFechaDeCreacion());
@@ -99,19 +98,19 @@ public class CuentaTest {
 		assertEquals(fechaCierre, cta.getFechaDeCierre());
 		assertTrue(cta.getTitular().equals(cte));
 		
-		cta.setSaldoActual(500D);
-		assertEquals(500, cta.getSaldoActual(),0);
+		cta.setSaldoActual(500.0);
+		assertEquals(500.0, cta.getSaldoActual(),0);
 		
 	}
 
 
 	@Test
 	public void testCuentaExtranjeraCambioSaldoOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0
 				;
 		LocalDate fechaCierre = null;
 
@@ -122,18 +121,18 @@ public class CuentaTest {
 		assertEquals(fechaCierre, cta.getFechaDeCierre());
 		assertTrue(cta.getTitular().equals(cte));
 		
-		cta.setSaldoActual(500D);
-		assertEquals(500, cta.getSaldoActual(),0);
+		cta.setSaldoActual(500.0);
+		assertEquals(500.0, cta.getSaldoActual(),0);
 	}
 	
 	@Test
 	public void testCuentaLocalCambioTitularOk() {
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 0D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 0.0, null, cte);
 
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D;
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0;
 		LocalDate fechaCierre = null;
 
 		assertEquals(fechacreacion, cta.getFechaDeCreacion());
@@ -143,7 +142,7 @@ public class CuentaTest {
 		assertEquals(fechaCierre, cta.getFechaDeCierre());
 		assertTrue(cta.getTitular().equals(cte));
 
-		Cliente nuevotitular = new Cliente("nuevonombre", "nuevoapellido", "telefono", "email@email.com", dir);
+		Cliente nuevotitular = mock(Cliente.class);
 		
 		cta.setTitular(nuevotitular);
 		assertEquals(nuevotitular, cta.getTitular());
@@ -153,11 +152,11 @@ public class CuentaTest {
 
 	@Test
 	public void testCuentaExtranjeraCambioTitularOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		LocalDate fechacreacion = LocalDate.now();
-		Double saldoInicial = 0D;
-		Double saldoActual = 0D;
-		Double descubierto = 0D
+		Double saldoInicial = 0.0;
+		Double saldoActual = 0.0;
+		Double descubierto = 0.0
 				;
 		LocalDate fechaCierre = null;
 
@@ -204,7 +203,7 @@ public class CuentaTest {
 		Compra mov5 = mock(Compra.class);
 		Venta mov6 = mock(Venta.class);
 		
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000D, null, cte );
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 1000.0, null, cte );
 		
 		cta.agregarMovimiento(mov1);
 		cta.agregarMovimiento(mov2);
@@ -225,7 +224,7 @@ public class CuentaTest {
 		Cliente cte4 = mock(Cliente.class);
 		Cliente cte5 = mock(Cliente.class);
 		
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000D, null, cte );
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 1000.0, null, cte );
 
 		cta.agregarCotitular(cte1);
 		cta.agregarCotitular(cte2);
@@ -242,7 +241,7 @@ public class CuentaTest {
 		Cliente cte2 = mock(Cliente.class);
 		Cliente cte3 = mock(Cliente.class);
 
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 1000.0, null, cte);
 
 		try {
 			cta.agregarCotitular(cte1);
@@ -264,7 +263,7 @@ public class CuentaTest {
 		Cliente cte4 = mock(Cliente.class);
 		Cliente cte5 = mock(Cliente.class);
 		
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 1000D, null, cte );
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 1000.0, null, cte );
 
 		cta.agregarCotitular(cte1);
 		cta.agregarCotitular(cte2);
@@ -281,7 +280,7 @@ public class CuentaTest {
 
 	@Test
 	public void testCuentaDelClienteOK() {
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 0D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 0.0, null, cte);
 	
 		assertTrue(cte.cuentaDelCliente(cta));
 
@@ -291,7 +290,7 @@ public class CuentaTest {
 	public void testCuentaDelClienteMal() {
 		Cliente cte1 = mock(Cliente.class);
 		
-		cta = new CuentaLocal(LocalDate.now(), 0D, 0D, 0D, null, cte);
+		cta = new CuentaLocal(LocalDate.now(), 0.0, 0.0, 0.0, null, cte);
 		
 		assertTrue(!cte1.cuentaDelCliente(cta));
 

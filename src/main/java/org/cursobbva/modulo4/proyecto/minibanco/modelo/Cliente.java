@@ -15,20 +15,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.validation.ConstraintViolation;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
- * 
+ *  
  * @author Cristian Gutierrez
  *
  */
@@ -70,36 +65,40 @@ public class Cliente {
 		this.direccion = direccion;
 	}
 
+	public boolean esTitular(Cuenta cuenta) {
+		return cuentasTitular.contains(cuenta);
+	}
+	
 	public void agregarCuentaTitular(Cuenta cuentaTitular) {
-		if (cuentasTitular.contains(cuentaTitular)) {
+		if (esTitular(cuentaTitular)) {
 			throw new IllegalArgumentException("Cliente ya es titular de la cuenta");
 		} else {
 			cuentasTitular.add(cuentaTitular);			
 		}
-
 	}	
 
-	//VER si se puede eliminar este metodo. No es necesario para persistir
+	public boolean esCoTitular(Cuenta cuenta) {
+		return cuentasCoTitular.contains(cuenta);
+	}
+	
 	public void agregarCuentaCoTitular(Cuenta cuentaCoTitular) {
-		if (cuentasCoTitular.contains(cuentaCoTitular)) {
+		if (esCoTitular(cuentaCoTitular)) {
 			throw new IllegalArgumentException("Cliente ya es cotitular de la cuenta");
 		} else {
 			cuentasCoTitular.add(cuentaCoTitular);			
 		}
-
 	}	
 
-	//VER si se puede eliminar este metodo. No es necesario para persistir
 	public void quitarCuentaCoTitular(Cuenta cuentaCoTitular) {
-		if (!cuentasCoTitular.contains(cuentaCoTitular)) {
+		if (!esCoTitular(cuentaCoTitular)) {
 			throw new IllegalArgumentException("Cliente no es cotitular de la cuenta");
 		} else {
 			cuentasCoTitular.remove(cuentaCoTitular);			
 		}
-
 	}	
 	
 	public boolean cuentaDelCliente(Cuenta cta) {
+//		return this.esTitular(cta) || this.esCoTitular(cta);
 		boolean resp = false;
 		for (int i=0;i<cuentasTitular.size();i++) {
 			if (cuentasTitular.get(i).getNumero() == cta.getNumero()){
@@ -111,7 +110,6 @@ public class Cliente {
 				resp = true;
 			}
 	    }
-
 		return resp;
 	}
 	

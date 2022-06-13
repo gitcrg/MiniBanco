@@ -1,38 +1,29 @@
 package org.cursobbva.modulo4.proyecto.minibanco.servicio;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.validation.ConstraintViolation;
 
 import org.cursobbva.modulo4.proyecto.minibanco.dao.ClienteDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.dao.CuentaDAO;
 import org.cursobbva.modulo4.proyecto.minibanco.dao.MovimientoDAO;
-import org.cursobbva.modulo4.proyecto.minibanco.implem.ResultadoCambioImplem;
 import org.cursobbva.modulo4.proyecto.minibanco.implem.ServicioCambioImplem;
 import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cliente;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaLocal;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Movimiento;
-import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaDebito;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Venta;
-import org.cursobbva.modulo4.proyecto.minibanco.uso.UsoMinibancoPersistenciaDAOSpring;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * 
+ * @author Cristian Gutierrez
+ *
+ */
 
 @Component
 public class ServicioMovimiento {
@@ -146,8 +137,8 @@ public class ServicioMovimiento {
 		
 		ResultadoCambio resultadoCambio = (ResultadoCambio) servicioCambio.cambiar(origen.getMoneda(), destino.getMoneda(), monto);
 		
-		Venta vtadbt = new Venta(LocalDateTime.now(), monto, "Debito Venta de moneda extranjera", resultadoCambio.getTasa(), 0D);
-		Venta vtacrdt = new Venta(LocalDateTime.now(), monto*resultadoCambio.getTasa(), "Credito Venta de moneda extranjera", resultadoCambio.getTasa(), 0D);
+		Venta vtadbt = new Venta(LocalDateTime.now(), monto, "Debito Venta de moneda extranjera", resultadoCambio.getTasa(), 0.0);
+		Venta vtacrdt = new Venta(LocalDateTime.now(), resultadoCambio.getResultado(), "Credito Venta de moneda extranjera", resultadoCambio.getTasa(), 0.0);
 		
 		origen.agregarMovimiento(vtadbt);
 		destino.agregarMovimiento(vtacrdt);

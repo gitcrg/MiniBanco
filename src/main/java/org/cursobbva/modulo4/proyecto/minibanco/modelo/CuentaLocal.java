@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "CUENTAS_LOCALES")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class CuentaLocal extends Cuenta{
 
 	public CuentaLocal(LocalDate fechaDeCreacion, Double saldoInicial, Double saldoActual, Double descubiertoAcordado, LocalDate fechaDeCierre, Cliente titular) {
@@ -28,4 +30,9 @@ public class CuentaLocal extends Cuenta{
 		vta.setCuenta(this);
 	}
 
+	public void agregarMovimiento(Compra cmp) {
+		setSaldoActual(getSaldoActual() - (cmp.getMonto()*cmp.getCotizacion()));
+		this.getMovimientos().add(cmp);
+		cmp.setCuenta(this);
+	}
 }

@@ -13,7 +13,7 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 /**
- * 
+ * TEST de Constructor y Validacion de atributos de Direccion de Cliente
  * @author Cristian Gutierrez
  *
  */

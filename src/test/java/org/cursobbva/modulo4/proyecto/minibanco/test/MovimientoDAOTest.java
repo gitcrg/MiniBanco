@@ -29,7 +29,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
- * 
+ * TEST para DAO de Movimiento
  * @author Cristian Gutierrez
  *
  */
@@ -59,7 +59,7 @@ class MovimientoDAOTest {
 
 	@Test
 	public void testCreateExtraccionOk() {
-		ext = new Extraccion(LocalDateTime.now(), 2000D, "extraccion 1", "cajaCajero 1");
+		ext = new Extraccion(LocalDateTime.now(), 2000.0, "extraccion 1", "cajaCajero 1");
 		movDao.create(ext);
 		em.flush();
 		Movimiento movguardado = em.find(Extraccion.class, ext.getId());

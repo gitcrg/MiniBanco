@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 
 import java.time.LocalDate;
@@ -19,7 +19,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * Main para uso de persistencia con DAOs con Springs
+ * @author Cristian Gutierrez
+ *
+ */
 @Component
 public class UsoMinibancoPersistenciaDAOSpring {
 	

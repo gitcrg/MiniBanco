@@ -1,6 +1,5 @@
 package org.cursobbva.modulo4.proyecto.minibanco.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +23,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
- * 
+ * TEST para DAO de Cuenta
  * @author Cristian Gutierrez
  *
  */
@@ -60,7 +59,7 @@ class CuentaDAOTest {
 
 	@Test
 	public void testCreateCuentaOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		cteDao.create(cte);
 		ctaDao.create(cta);
 		em.flush();
@@ -74,7 +73,7 @@ class CuentaDAOTest {
 
 	@Test
 	public void testReadCuentaOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		cteDao.create(cte);
 		ctaDao.create(cta);
 		em.flush();
@@ -84,7 +83,7 @@ class CuentaDAOTest {
 	
 	@Test
 	public void testUpdateCuentaOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		cteDao.create(cte);
 		ctaDao.create(cta);
 		em.flush();
@@ -99,7 +98,7 @@ class CuentaDAOTest {
 
 	@Test
 	public void testUpdateSaldoInicialOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		cteDao.create(cte);
 		ctaDao.create(cta);
 		em.flush();
@@ -117,7 +116,7 @@ class CuentaDAOTest {
 	
 	@Test
 	public void testDeleteCuentaOk() {
-		cta = new CuentaExtranjera(LocalDate.now(), 0D, 0D, 0D, null, cte, TipoMoneda.USD );
+		cta = new CuentaExtranjera(LocalDate.now(), 0.0, 0.0, 0.0, null, cte, TipoMoneda.USD );
 		cteDao.create(cte);
 		ctaDao.create(cta);
 		em.flush();

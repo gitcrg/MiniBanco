@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,7 +15,11 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Cuenta;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.CuentaExtranjera;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TipoMoneda;
-
+/**
+ * Main para uso de persistencia con DAOs
+ * @author Cristian Gutierrez
+ *
+ */
 public class UsoMinibancoPersistenciaDAO {
 
 	public static void main(String[] args) {
@@ -64,16 +68,14 @@ public class UsoMinibancoPersistenciaDAO {
 		cuentaDao.create(ctaext2);
 		cuentaDao.create(ctaext3);
 		cuentaDao.create(ctaext4);
-		ctaext1.setSaldoInicial(654d);
-		ctaext1.setSaldoActual(789d);
+		ctaext1.setSaldoInicial(654.0);
+		ctaext1.setSaldoActual(789.0);
 		
 		Collection<CuentaExtranjera> collcta;
 		collcta=cuentaDao.getCuentaPorMoneda(TipoMoneda.USD);
 		for(CuentaExtranjera c :collcta) {
 		      System.out.println(c.getMoneda()+"ENCONTRE ESTA MINEDA !!!!!");
 		}
-
-		
 		
 		tx.commit();
 		

@@ -1,4 +1,4 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Extraccion;
 import org.cursobbva.modulo4.proyecto.minibanco.modelo.TransferenciaCredito;
 
 /**
- * 
+ * Main para usar el modelo de clases
  * @author Cristian Gutierrez
  *
  */

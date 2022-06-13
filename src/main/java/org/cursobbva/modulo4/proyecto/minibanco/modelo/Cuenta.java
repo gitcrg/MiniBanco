@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,16 +23,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 
@@ -48,6 +42,7 @@ import lombok.experimental.SuperBuilder;
 })
 @Data
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "numero")
 public abstract class Cuenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,18 +85,18 @@ public abstract class Cuenta {
 		if (cotitulares.contains(cotitular)) {
 			throw new IllegalArgumentException("Cliente ya es cotitular de la cuenta");
 		} else {
-			cotitulares.add(cotitular);		
+			cotitulares.add(cotitular);
+			cotitular.agregarCuentaCoTitular(this);
 		}
-	
 	}
 	
 	public void quitarCotitular(Cliente cotitular) {
 		if (!cotitulares.contains(cotitular)) {
 			throw new IllegalArgumentException("Cliente no es cotitular de la cuenta");
 		} else {
-			cotitulares.remove(cotitular);		
+			cotitulares.remove(cotitular);
+			cotitular.quitarCuentaCoTitular(this);
 		}
-	
 	}
 	
 	public void agregarMovimiento(Movimiento movimiento) {
@@ -121,7 +116,21 @@ public abstract class Cuenta {
 		trfdbt.setCuenta(this);
 	}
 
+	public void agregarMovimiento(Deposito deposito) {
+		saldoActual = saldoActual + deposito.getMonto();
+		movimientos.add(deposito);
+		deposito.setCuenta(this);
+	}
+
+	public void agregarMovimiento(Extraccion extraccion) {
+		saldoActual = saldoActual - extraccion.getMonto();
+		movimientos.add(extraccion);
+		extraccion.setCuenta(this);
+	}
+		
 	public abstract void agregarMovimiento(Venta vta);
+
+	public abstract void agregarMovimiento(Compra cmp);
 	
 	public TipoMoneda getMoneda() {
 		return null;

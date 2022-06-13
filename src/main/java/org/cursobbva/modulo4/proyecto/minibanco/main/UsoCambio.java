@@ -1,16 +1,19 @@
-package org.cursobbva.modulo4.proyecto.minibanco.uso;
+package org.cursobbva.modulo4.proyecto.minibanco.main;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cursobbva.modulo4.proyecto.minibanco.implem.ResultadoCambioImplem;
 import org.cursobbva.modulo4.proyecto.minibanco.interf.ResultadoCambio;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
+/**
+ * Main para consumir API de cambio de moneda extranjera
+ * @author Cristian Gutierrez
+ *
+ */
 
 public class UsoCambio {
 
@@ -36,7 +39,10 @@ public class UsoCambio {
 		ResponseEntity<ResultadoCambio> respuesta = template.exchange(baseUri + queryCambiar, HttpMethod.GET, httpEntity, ResultadoCambio.class, variables);
 
 	    ResultadoCambio rs = respuesta.getBody();
-		
+	    
+	    System.out.println("TASA OBTENIDA" + rs.getTasa());		
+	    System.out.println("RESULTADO" + rs.getResultado());
+	    
 	}
 
 }

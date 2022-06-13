@@ -19,7 +19,7 @@ import org.cursobbva.modulo4.proyecto.minibanco.modelo.Direccion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 /**
- * 
+ * TEST de Constructores, Metodos, Validaciones de atributos de clientes
  * @author Cristian Gutierrez
  *
  */
@@ -49,6 +49,23 @@ public class ClienteTest {
 		assertTrue(cte.getDireccion().equals(dir));
 	}
 	
+	
+	@Test
+	public void testValidacionCamposObligatorios() {
+		String nombre = "";
+		String apellido = "";
+		String telefono = "";
+		String email = "";
+		
+		cte = new Cliente(nombre, apellido, telefono, email, null);
+
+		Set<ConstraintViolation<Cliente>> violations = validator.validate(cte);
+		assertTrue(!violations.isEmpty());
+		assertEquals(4,violations.size());//SE REPITE EL ERROR DE DIRECCION NO INFORMADA
+		
+	}
+
+
 	@Test
 	public void testClienteCambioDatosOk() {
 		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
@@ -85,22 +102,22 @@ public class ClienteTest {
 		
 	}
 
-	
 	@Test
-	public void testValidacionCamposObligatorios() {
-		String nombre = "";
-		String apellido = "";
-		String telefono = "";
-		String email = "";
-		
-		cte = new Cliente(nombre, apellido, telefono, email, null);
-
-		Set<ConstraintViolation<Cliente>> violations = validator.validate(cte);
-		assertTrue(!violations.isEmpty());
-		assertEquals(4,violations.size());
-		
+	public void testEsTitular() {
+		Cuenta cta1 = mock(Cuenta.class);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cte.getCuentasTitular().add(cta1);
+		assertTrue(cte.esTitular(cta1));
 	}
 
+	@Test
+	public void testEsCoTitular() {
+		Cuenta cta1 = mock(Cuenta.class);
+		cte = new Cliente("nombre", "apellido", "telefono", "email@email.com", dir);
+		cte.getCuentasCoTitular().add(cta1);
+		assertTrue(cte.esCoTitular(cta1));
+	}
+	
 	@Test
 	public void testAgregarCuentaCotitular() {
 		
@@ -122,7 +139,7 @@ public class ClienteTest {
 	}
 
 	@Test
-	public void testAgregarCuentaCotitularDuplicado() {
+	public void testAgregarCuentaCotitularYaEsCotitular() {
 		Cuenta cta1 = mock(Cuenta.class);
 		Cuenta cta2 = mock(Cuenta.class);
 		Cuenta cta3 = mock(Cuenta.class);
